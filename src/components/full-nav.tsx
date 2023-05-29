@@ -5,7 +5,7 @@ import Image from 'next/image';
 export function FullNav() {
   return (
     <header className='w-screen z-40'>
-        <nav className='px-4 md:px-8 flex justify-between h-20 items-center py-6 container max-w-[1200px] mx-auto'>
+        <nav className='px-4 md:px-0 flex justify-between h-20 items-center py-6 container max-w-[1200px] mx-auto'>
             <Link href={'/'}>
               <Image 
                 src="/logo.svg" 
