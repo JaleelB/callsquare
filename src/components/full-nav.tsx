@@ -15,7 +15,7 @@ export function FullNav() {
                 priority 
               />
             </Link>
-            <Link className="px-4 py-2 rounded-full bg-black text-white text-sm" href={"/login"}>Get Started</Link>
+            <Link className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm" href={"/login"}>Get Started</Link>
         </nav>
     </header>
   );
