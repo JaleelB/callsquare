@@ -1,5 +1,5 @@
 import SiteFooter from "~/components/footer";
-import { FullNav } from "~/components/full-nav";
+import FullNav from "~/components/full-nav";
 
 export default function HomePageLayout({
     children,
