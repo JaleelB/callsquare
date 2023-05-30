@@ -2,12 +2,14 @@
 import * as React from "react"
 import { signIn } from "next-auth/react"
 import { Icons } from './icons'
+import ToastContext from "~/context/toast-context"
 
 export default function SocialAuthForm (){
 
   const [isGithubSocialLoading, setIisGithubSocialLoading] = React.useState<boolean>(false)
   const [isGoogleSocialLoading, setIsGoogleSocialLoading] = React.useState<boolean>(false)
   const [isDiscordSocialLoading, setIsDiscordSocialLoading] = React.useState<boolean>(false)
+  const { addToast } = React.useContext(ToastContext);
 
   return (
     <section className='w-full mx-auto flex flex-col gap-1'>
@@ -17,6 +19,11 @@ export default function SocialAuthForm (){
             setIisGithubSocialLoading(true)
             signIn("github").catch((error) => {
               console.error("Error during Github sign-in:", error)
+              addToast({
+                title: "Something went wrong!",
+                variant: "destructive",
+                message: "Error during Github sign-in."
+              })
               setIisGithubSocialLoading(false)
             })
           }}
@@ -35,6 +42,11 @@ export default function SocialAuthForm (){
             setIsGoogleSocialLoading(true)
             signIn("google").catch((error) => {
               console.error("Error during Google sign-in:", error)
+              addToast({
+                title: "Something went wrong!",
+                variant: "destructive",
+                message: "Error during Google sign-in."
+              })
               setIisGithubSocialLoading(false)
             })
           }}
@@ -52,7 +64,12 @@ export default function SocialAuthForm (){
           onClick={() => {
             setIsDiscordSocialLoading(true)
             signIn("discord").catch((error) => {
-              console.error("Error during Github sign-in:", error)
+              console.error("Error during Discord sign-in:", error)
+              addToast({
+                title: "Something went wrong!",
+                variant: "destructive",
+                message: "Error during Discord sign-in."
+              })
               setIisGithubSocialLoading(false)
             })
           }}

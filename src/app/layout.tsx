@@ -1,3 +1,4 @@
+import ToastProvider from '~/components/toast-provider';
 import '../styles/globals.css'
 
 export default function RootLayout({
@@ -7,7 +8,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className='bg-zinc-50'>{children}</body>
+      <body className='bg-zinc-50'>
+        <ToastProvider>
+          {children}
+        </ToastProvider>
+      </body>
     </html>
   );
 }
