@@ -9,7 +9,7 @@ export default function HomePageLayout({
   return (
     <div className="flex min-h-screen flex-col">
         <FullNav/>
-        <main className="flex-1">
+        <main className="flex-1 w-screen">
             {children}
         </main>
         <SiteFooter/>
