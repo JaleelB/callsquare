@@ -15,7 +15,10 @@ export default function SocialAuthForm (){
           className='w-full h-12 bg-slate-900 flex gap-3 text-sm text-white justify-center items-center rounded-sm'
           onClick={() => {
             setIisGithubSocialLoading(true)
-            signIn("github")
+            signIn("github").catch((error) => {
+              console.error("Error during Github sign-in:", error)
+              setIisGithubSocialLoading(false)
+            })
           }}
           disabled={isGithubSocialLoading}
         >
@@ -30,7 +33,10 @@ export default function SocialAuthForm (){
           className='w-full h-12 border-2 border-slate-200 text-sm text-slate-900 flex gap-3 justify-center items-center rounded-sm'
           onClick={() => {
             setIsGoogleSocialLoading(true)
-            signIn("google")
+            signIn("google").catch((error) => {
+              console.error("Error during Google sign-in:", error)
+              setIisGithubSocialLoading(false)
+            })
           }}
           disabled={isGoogleSocialLoading}
         >
@@ -45,7 +51,10 @@ export default function SocialAuthForm (){
           className='w-full h-12 border-2 border-slate-200 text-slate-900 text-sm flex gap-3 justify-center items-center rounded-sm'
           onClick={() => {
             setIsDiscordSocialLoading(true)
-            signIn("discord")
+            signIn("discord").catch((error) => {
+              console.error("Error during Github sign-in:", error)
+              setIisGithubSocialLoading(false)
+            })
           }}
           disabled={isDiscordSocialLoading}
         >
