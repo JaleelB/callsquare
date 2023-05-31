@@ -1,6 +1,7 @@
 import Link from 'next/link';
 import React from 'react'
 import { Icons } from './icons';
+import Button from './ui/button';
 
 export default function FullNav() {
   return (
@@ -9,7 +10,12 @@ export default function FullNav() {
             <Link href={'/'}>
               <Icons.logo width="150" height="30"/>
             </Link>
-            <Link className="px-4 py-2 rounded-full bg-slate-900 text-white text-sm" href={"/login"}>Get Started</Link>
+            
+            <Button className="rounded-full">
+              <Link  href={"/login"}>
+                Get Started
+              </Link>
+            </Button>
         </nav>
     </header>
   );
