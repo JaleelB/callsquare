@@ -40,7 +40,7 @@ interface NavigationItem {
     return (
         <footer className='px-4 md:px-8 pt-16 pb-8 md:pb-12 w-screen mt-auto bottom-0'>
             <div className='
-                  w-full mx-auto max-w-[1200px] text-neutral-700
+                  w-full mx-auto max-w-[1400px] text-neutral-700
                   flex flex-col sm:flex-row justify-between md:items-center
                   font-normal
                 '
