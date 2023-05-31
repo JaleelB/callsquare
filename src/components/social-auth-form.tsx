@@ -1,89 +1,69 @@
 "use client"
-import * as React from "react"
-import { signIn } from "next-auth/react"
-import { Icons } from './icons'
-import ToastContext from "~/context/toast-context"
+import * as React from "react";
+import { signIn } from "next-auth/react";
+import { Icons } from './icons';
+import ToastContext from "~/context/toast-context";
+import { useRouter } from "next/router";
 
-export default function SocialAuthForm (){
+const socialProviders = [
+  { name: "github", color: "#FFF", icon: Icons.github },
+  { name: "google", color: "#0f172a", icon: Icons.google },
+  { name: "discord", color: "#0f172a", icon: Icons.discord },
+];
 
-  const [isGithubSocialLoading, setIisGithubSocialLoading] = React.useState<boolean>(false)
-  const [isGoogleSocialLoading, setIsGoogleSocialLoading] = React.useState<boolean>(false)
-  const [isDiscordSocialLoading, setIsDiscordSocialLoading] = React.useState<boolean>(false)
+export default function SocialAuthForm () {
+  const [isSocialLoading, setIsSocialLoading] = React.useState<{ [key: string]: boolean }>({});
   const { addToast } = React.useContext(ToastContext);
+  // const router = useRouter();
+
+  const handleSocialSignIn = (provider: string) => {
+    setIsSocialLoading((prevLoading) => ({
+      ...prevLoading,
+      [provider]: true,
+    }));
+
+    signIn(provider, { callbackUrl: '/' })
+      .then(() =>{
+        addToast({
+          title: "Hooray!",
+          message: `You were successfully signed in.`,
+        });
+      })
+      .catch((error) => {
+        console.error(`Error during ${provider} sign-in:`, error);
+        addToast({
+          title: "Something went wrong!",
+          variant: "destructive",
+          message: `Error during ${provider} sign-in.`,
+        });
+      })
+      .finally(() => {
+        setIsSocialLoading((prevLoading) => ({
+          ...prevLoading,
+          [provider]: false,
+        }));
+      });
+  };
 
   return (
     <section className='w-full mx-auto flex flex-col gap-1'>
+      {socialProviders.map((provider) => (
         <button 
-          className='w-full h-12 bg-slate-900 flex gap-3 text-sm text-white justify-center items-center rounded-sm'
-          onClick={() => {
-            setIisGithubSocialLoading(true)
-            signIn("github").catch((error) => {
-              console.error("Error during Github sign-in:", error)
-              addToast({
-                title: "Something went wrong!",
-                variant: "destructive",
-                message: "Error during Github sign-in."
-              })
-              setIisGithubSocialLoading(false)
-            })
-          }}
-          disabled={isGithubSocialLoading}
+          key={provider.name}
+          className={`w-full h-12 text-sm flex gap-3 justify-center items-center rounded-sm
+           ${provider.name === "github" ? "bg-slate-900 text-white border-2 border-slate-900": "border-2 border-slate-200 text-slate-900 "}
+          `}
+          onClick={() => handleSocialSignIn(provider.name)}
+          disabled={isSocialLoading[provider.name]}
         >
-            {isGithubSocialLoading ? (
-              <Icons.spinner  width="16" height="16" color="white"/>
-            ) : (
-              <Icons.github color='white' width="16" height="16"/>
-            )}
-            Continue with Github
+          {isSocialLoading[provider.name] ? (
+            <Icons.spinner width="16" height="16"/>
+          ) : (
+            <provider.icon color={provider.color} width="16" height="16"/>
+          )}
+          Continue with {provider.name.charAt(0).toUpperCase() + provider.name.slice(1)}
         </button>
-        <button 
-          className='w-full h-12 border-2 border-slate-200 text-sm text-slate-900 flex gap-3 justify-center items-center rounded-sm'
-          onClick={() => {
-            setIsGoogleSocialLoading(true)
-            signIn("google").catch((error) => {
-              console.error("Error during Google sign-in:", error)
-              addToast({
-                title: "Something went wrong!",
-                variant: "destructive",
-                message: "Error during Google sign-in."
-              })
-              setIisGithubSocialLoading(false)
-            })
-          }}
-          disabled={isGoogleSocialLoading}
-        >
-            {isGoogleSocialLoading ? (
-              <Icons.spinner  width="16" height="16"/>
-            ) : (
-              <Icons.google color='#0f172a' width="16" height="16"/>
-            )}
-            Continue with Google
-        </button>
-        <button 
-          className='w-full h-12 border-2 border-slate-200 text-slate-900 text-sm flex gap-3 justify-center items-center rounded-sm'
-          onClick={() => {
-            setIsDiscordSocialLoading(true)
-            signIn("discord").catch((error) => {
-              console.error("Error during Discord sign-in:", error)
-              addToast({
-                title: "Something went wrong!",
-                variant: "destructive",
-                message: "Error during Discord sign-in."
-              })
-              setIisGithubSocialLoading(false)
-            })
-          }}
-          disabled={isDiscordSocialLoading}
-        >
-            {isDiscordSocialLoading ? (
-              <Icons.spinner  width="16" height="16"/>
-            ) : (
-              <Icons.discord color='#0f172a' width="16" height="16"/>
-            )}
-            Continue with Discord
-        </button>
+      ))}
     </section>
-  )
+  );
 }
-
-
