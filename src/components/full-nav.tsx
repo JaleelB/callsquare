@@ -4,12 +4,11 @@ import React from 'react'
 import { Icons } from './icons';
 import Button from './ui/button';
 import { useSession } from 'next-auth/react';
-import UserAvatar from './ui/user-avatar';
+import UserAccountDropdown from './user-account-dropdown';
 
 export default function FullNav() {
 
   const { data: sessionData } = useSession();
-  console.log(sessionData)
 
   return (
     <header className='w-screen z-40 px-4 md:px-8'>
@@ -31,7 +30,12 @@ export default function FullNav() {
                 </Link>
               </Button> 
               )
-              : <UserAvatar image={sessionData?.user?.image as string} />
+              : <UserAccountDropdown user={{ 
+                ...sessionData?.user, 
+                name: sessionData?.user?.name || '', 
+                email: sessionData?.user?.email || '',
+                image: sessionData?.user?.image || '' 
+              }} />
             }
         </nav>
     </header>
