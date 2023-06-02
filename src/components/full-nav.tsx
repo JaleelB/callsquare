@@ -24,11 +24,19 @@ export default function FullNav() {
             </Link>
 
             {!sessionData?.user ? (
-              <Button className="rounded-full">
-                <Link  href={"/login"}>
-                  Get Started
-                </Link>
-              </Button> 
+              <div className='flex'>
+                <Button className="hidden sm:block mr-2 rounded-md" variant='transparent'>
+                  <Link  href={"/login"}>
+                    Sign in
+                  </Link>
+                </Button> 
+                <Button className="rounded-md">
+                  <Link  href={"/register"}>
+                    Get Started
+                  </Link>
+                </Button> 
+              </div>
+    
               )
               : <UserAccountDropdown user={{ 
                 ...sessionData?.user, 

@@ -1,6 +1,6 @@
 import React from 'react';
 
-type ButtonVariant = 'default' | 'destructive' | 'secondary';
+type ButtonVariant = 'default' | 'destructive' | 'secondary' | 'transparent';
 type ButtonSize = 'default' | 'sm' | 'lg';
 
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
@@ -21,6 +21,7 @@ export default function Button({
         default: 'bg-slate-900 border-2 border-slate-900 hover:bg-slate-900/90 text-white',
         destructive: 'bg-red-500 border-2 border-red-500 hover:bg-red-500/90 text-white',
         secondary: 'border-2 border-slate-200 text-slate-900 hover:bg-slate-100/90 text-slate-900',
+        transparent: 'text-slate-900 hover:bg-slate-200/90 text-slate-900',
     };
 
     const sizeClasses: Record<ButtonSize, string> = {
