@@ -45,7 +45,7 @@ export default function UserAccountDropdown({ user }: DropdownProps) {
                             onClick={(event) => {
                                 event.preventDefault()
                                 signOut({
-                                    callbackUrl: `${window.location.origin}/login`,
+                                    callbackUrl: `${window.location.origin}/`,
                                 })
                                 .catch((error) => {
                                     console.error('Error signing out:', error);

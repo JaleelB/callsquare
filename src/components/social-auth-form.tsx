@@ -1,7 +1,7 @@
 "use client"
 import * as React from "react";
 import { signIn } from "next-auth/react";
-import { Icons } from './icons';
+import { Icons } from './ui/icons';
 import ToastContext from "~/context/toast-context";
 import Button from "./ui/button";
 
@@ -21,7 +21,7 @@ export default function SocialAuthForm () {
       [provider]: true,
     }));
 
-    signIn(provider, { callbackUrl: '/' })
+    signIn(provider, { callbackUrl: '/calls' })
       .then(() =>{
         addToast({
           title: "Hooray!",
