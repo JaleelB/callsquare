@@ -1,7 +1,7 @@
 "use client";
 import Link from 'next/link';
 import React from 'react'
-import { Icons } from './icons';
+import { Icons } from './ui/icons';
 import Button from './ui/button';
 import { useSession } from 'next-auth/react';
 import UserAccountDropdown from './user-account-dropdown';
