@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
-import UserAvatar from './ui/user-avatar';
 import { signOut } from 'next-auth/react';
 import ToastContext from '~/context/toast-context';
+import UserAvatarLabelGroup from './user-avatar-label-group';
 
 interface User {
   name: string;
@@ -23,8 +23,8 @@ export default function UserAccountDropdown({ user }: DropdownProps) {
 
     return (
         <div className="relative">
-            <button onClick={toggleDropdown}>
-                <UserAvatar image={user.image}/>
+            <button onClick={toggleDropdown} className='flex gap-2'>
+                <UserAvatarLabelGroup user={user}/>
             </button>
             {isOpen && (
                 <div
