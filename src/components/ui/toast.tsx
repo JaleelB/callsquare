@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { type ToastVariant } from '~/context/toast-context';
-import { Icons } from './icons';
+import { Icons } from '../icons';
 
 interface ToastProps {
     id: number;
