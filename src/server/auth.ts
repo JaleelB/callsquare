@@ -45,6 +45,9 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   },
+  pages: {
+    signIn: '/login',
+  },
   providers: [
     GithubProvider({
       clientId: env.GITHUB_CLIENT_ID,

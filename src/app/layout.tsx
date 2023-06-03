@@ -1,7 +1,5 @@
-"use client"
 import ToastProvider from '~/components/toast-provider';
 import '../styles/globals.css'
-import { SessionProvider } from 'next-auth/react';
 
 export default function RootLayout({
   children,
@@ -11,12 +9,10 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body className='bg-zinc-50'>
-        <SessionProvider>
+      <body>
           <ToastProvider>
             {children}
           </ToastProvider>
-        </SessionProvider>
       </body>
     </html>
   );

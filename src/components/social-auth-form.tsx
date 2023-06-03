@@ -4,6 +4,7 @@ import { signIn } from "next-auth/react";
 import { Icons } from './ui/icons';
 import ToastContext from "~/context/toast-context";
 import Button from "./ui/button";
+import { useSearchParams } from "next/navigation";
 
 const socialProviders = [
   { name: "github", color: "#FFF", icon: Icons.github },
@@ -14,6 +15,7 @@ const socialProviders = [
 export default function SocialAuthForm () {
   const [isSocialLoading, setIsSocialLoading] = React.useState<{ [key: string]: boolean }>({});
   const { addToast } = React.useContext(ToastContext);
+  const searchParams = useSearchParams()
 
   const handleSocialSignIn = (provider: string) => {
     setIsSocialLoading((prevLoading) => ({
@@ -21,7 +23,7 @@ export default function SocialAuthForm () {
       [provider]: true,
     }));
 
-    signIn(provider, { callbackUrl: '/calls' })
+    signIn(provider, { callbackUrl: searchParams?.get("from") || "/calls", })
       .then(() =>{
         addToast({
           title: "Hooray!",
