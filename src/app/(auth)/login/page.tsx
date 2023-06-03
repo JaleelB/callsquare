@@ -12,9 +12,9 @@ export const metadata: Metadata = {
 export default function LoginPage() {
   return (
     <main className="container flex h-screen w-screen mx-auto flex-col items-center justify-center">
-      <Button variant="transparent" className="absolute top-4 left-4 md:left-8">
-        <Link href="/" >
-          <span className="flex">
+      <Button variant="transparent" className="absolute top-4 left-4 md:left-8 rounded-md">
+        <Link href="/">
+          <span className="flex items-center">
             <Icons.chevronLeft className="mr-2" width={16} height={16} />
             Go back
           </span>
