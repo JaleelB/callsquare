@@ -38,14 +38,14 @@ interface NavigationItem {
     const year = d.getFullYear();
 
     return (
-        <footer className='px-4 md:px-8 pt-16 pb-8 md:pb-12 w-screen mt-auto bottom-0'>
+        <footer className='px-4 md:px-8 pb-8 pt-8 w-screen mt-auto bottom-0'>
             <div className='
                   w-full mx-auto max-w-[1400px] text-neutral-700
                   flex flex-col sm:flex-row justify-between md:items-center
                   font-normal
                 '
             >
-                <p className="flex md:justify-center pt-8 text-xs leading-5 text-neutral-500">
+                <p className="flex md:justify-center text-xs leading-5 text-neutral-500">
                     &copy; {`${year}`} Built by{" "}
                     <Link
                         href="https://github.com/JaleelB"
@@ -57,7 +57,7 @@ interface NavigationItem {
                     All rights reserved.
                 </p>
 
-                <div className="flex md:justify-center space-x-6 md:order-2  pt-4 md:pt-8">
+                <div className="flex md:justify-center space-x-6 md:order-2">
                     {navigation.map((item) => (
                         <Link
                             key={item.name}

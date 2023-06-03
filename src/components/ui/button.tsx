@@ -26,8 +26,8 @@ export default function Button({
 
     const sizeClasses: Record<ButtonSize, string> = {
         default: 'h-10 py-2 px-4',
-        sm: 'h-9 px-3 rounded-md',
-        lg: 'h-12 px-8 rounded-md',
+        sm: 'h-9 px-3',
+        lg: 'h-12 px-8',
     };
 
     const classes = `${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${className}`;
