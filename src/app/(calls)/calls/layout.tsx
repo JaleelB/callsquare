@@ -8,8 +8,10 @@ export default function HomePageLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
-        <FullNav/>
-        <main className="flex-1 w-screen">
+        <FullNav>
+          User
+        </FullNav>
+        <main className="flex-1 w-screen flex items-center">
             {children}
         </main>
         <SiteFooter/>
