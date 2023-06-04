@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getSession } from 'next-auth/react';
 import { type IncomingHttpHeaders } from 'http';
 import { withAuth } from "next-auth/middleware"
+import { absoluteUrl } from './utils/absoluteUrl';
 
 export default withAuth(
   async function middleware(req) {
@@ -28,7 +29,7 @@ export default withAuth(
     }
 
     if (!isAuth && !isAuthPage) {
-      return NextResponse.redirect(`/login?from=${encodeURIComponent(req.nextUrl.pathname)}`);
+      return NextResponse.redirect(absoluteUrl(`/login?from=${encodeURIComponent(req.nextUrl.pathname)}`));
     }
 
     // If the user is authenticated and they're not trying to access an auth page, let them proceed
