@@ -46,5 +46,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ['/calls', '/calls/:path*'],
+  matcher: ['/calls/:path*'],
 };
