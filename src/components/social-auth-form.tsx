@@ -25,10 +25,7 @@ export default function SocialAuthForm () {
 
     signIn(provider, { callbackUrl: searchParams?.get("from") || "/calls", })
       .then(() =>{
-        addToast({
-          title: "Hooray!",
-          message: `You were successfully signed in.`,
-        });
+        console.log(`Successfully signed in.`);
       })
       .catch((error) => {
         console.error(`Error during ${provider} sign-in:`, error);

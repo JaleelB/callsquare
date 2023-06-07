@@ -46,17 +46,17 @@ export default async function CallsPage(){
                 <div className="flex flex-col items-center gap-4 text-center">
                     <div>
                         <Badge date={formatDate(new Date())}/>
-                        <h1 className="mt-4 text-4xl text-slate-900 md:text-6xl font-bold leading-none px-4 md:px-8">
+                        <h1 className="mt-4 text-4xl text-slate-900 md:text-5xl lg:text-6xl font-bold leading-none px-4 md:px-8">
                             {`Welcome ${user?.name as string}`}
                         </h1>
                     </div>
                 </div>
             </section>
             <section className="space-y-6 mx-auto">
-                <div className="w-full max-w-[1100px] text-center mx-auto">
-                    <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-16 px-4 md:px-8">
+                <div className="w-full max-w-[1200px] text-center mx-auto">
+                    <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 place-items-center lg:gap-5 px-4 md:px-8">
                         {cardsData.map((card, index) => (
-                            <CardContainer key={index} className="w-full md:w-[350px] h-[230px]">
+                            <CardContainer key={index} className="w-full h-[230px]">
                                 <CardHeader className="flex justify-between">
                                 <div className="w-[50px] h-[50px] flex items-center justify-center bg-slate-900 rounded-md">
                                     {card.icon}

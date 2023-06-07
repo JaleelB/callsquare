@@ -29,7 +29,7 @@ export default function UserAccountDropdown({ user }: DropdownProps) {
             </button>
             {isOpen && (
                 <div
-                    className="absolute right-0 mt-2 bg-white rounded-md shadow-lg z-10"
+                    className="absolute right-0 mt-2 bg-white rounded-md shadow-lg z-10 border border-slate-200"
                 >
                     <div>
                         <div className='flex flex-col px-4 py-2 border-b border-slate-200'>

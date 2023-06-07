@@ -16,7 +16,7 @@ interface CardTitleProps extends CardComponentProps {
 
 function CardContainer({ children, className = '' }: CardComponentProps){
   return (
-    <div className={`rounded-2xl bg-neutral-100 border-2 border-zinc-100 p-2 ${className}`}>
+    <div className={`rounded-2xl bg-neutral-50 border-2 border-zinc-100 p-2 ${className}`}>
         <div className='bg-white w-full h-full rounded-xl p-6 shadow-md flex flex-col justify-between'>
             {children}
         </div>
