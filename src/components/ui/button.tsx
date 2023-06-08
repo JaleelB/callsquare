@@ -18,9 +18,9 @@ export default function Button({
     const baseClasses = 'inline-flex items-center justify-center text-sm transition-colors focus:outline-none disabled:opacity-50 disabled:pointer-events-none';
 
     const variantClasses: Record<ButtonVariant, string> = {
-        default: 'bg-slate-900 border-2 border-slate-900 hover:bg-slate-900/90 text-white',
-        destructive: 'bg-red-500 border-2 border-red-500 hover:bg-red-500/90 text-white',
-        secondary: 'border-2 border-slate-200 text-slate-900 hover:bg-slate-100/90 text-slate-900',
+        default: 'bg-slate-900 border border-slate-900 hover:bg-slate-900/90 text-white',
+        destructive: 'bg-red-500 border border-red-500 hover:bg-red-500/90 text-white',
+        secondary: 'border border-slate-200 text-slate-900 hover:bg-slate-100/90 text-slate-900',
         transparent: 'text-slate-900 hover:bg-slate-200/90 text-slate-900',
     };
 
