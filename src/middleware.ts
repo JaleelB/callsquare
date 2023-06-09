@@ -1,23 +1,10 @@
 import { type NextRequest, NextResponse } from 'next/server';
-import { getSession } from 'next-auth/react';
-import { type IncomingHttpHeaders } from 'http';
 import { absoluteUrl } from './utils/absoluteUrl';
+import { getToken } from 'next-auth/jwt';
 
 export async function middleware(req: NextRequest) {
-  // Convert the Headers object into an IncomingHttpHeaders object
-  const headers: IncomingHttpHeaders = {};
-  req.headers.forEach((value, name) => {
-    headers[name] = value;
-  });
 
-  // Create a new request object compatible with `getSession`
-  const compatibleReq = {
-    headers,
-    method: req.method,
-    url: req.nextUrl.href,
-  };
-
-  const session = await getSession({ req: compatibleReq });
+  const session = await getToken({ req });
 
   const isAuth = !!session;
   const isAuthPage = req.nextUrl.pathname.startsWith('/login') || req.nextUrl.pathname.startsWith('/register');

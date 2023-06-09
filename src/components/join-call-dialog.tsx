@@ -18,21 +18,23 @@ export default function JoinCallDialog (card: CardProps)  {
             <Dialog open={showJoinDialog}>
                 <DialogHeader className='mb-6'>Join a call</DialogHeader>
                 <DialogContent>
-                    <Input 
-                        type="text" 
-                        placeholder="Your name (optional)" 
-                        className='mb-2'
-                        label='Name'
-                    />
-                    <Input 
-                        type="text" 
-                        placeholder="Meeting link or ID" 
-                        required 
-                        className='mb-4'
-                        label='Meeting link or ID'
-                    />
-                    <Checkbox checked={audio} onChange={() => setAudio(!audio)} label="Don't join with audio" className='my-2' />
-                    <Checkbox checked={video} onChange={() => setVideo(!video)} label="Turn off my video" />
+                    <form>
+                        <Input 
+                            type="text" 
+                            placeholder="Your name (optional)" 
+                            className='mb-2'
+                            label='Name'
+                        />
+                        <Input 
+                            type="text" 
+                            placeholder="Meeting link or ID" 
+                            required 
+                            className='mb-4'
+                            label='Meeting link or ID'
+                        />
+                        <Checkbox checked={audio} onChange={() => setAudio(!audio)} label="Don't join with audio" className='my-2' />
+                        <Checkbox checked={video} onChange={() => setVideo(!video)} label="Turn off my video" />
+                    </form>
                 </DialogContent>
                 <DialogFooter className='flex flex-col-reverse md:flex-row mt-6 md:mt-4'>
                     <Button 
