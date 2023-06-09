@@ -35,10 +35,10 @@ function Dialog ({ children, open, className = "", ...props }: DialogProps) {
         >
           <div className="flex justify-center items-center min-h-screen">
             <div 
-                className="fixed inset-0 bg-white/80 backdrop-blur-sm z-100"
+                className="fixed inset-0 bg-white/90 backdrop-blur-sm z-100"
             ></div>
             <div
-              className="bg-white z-100 rounded-lg text-left p-6 border border-slate-600/20 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full"
+              className="bg-white z-100 rounded-lg text-left p-6 border border-slate-600/20 overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-[90%] sm:max-w-lg sm:w-full"
             >
               {children}
             </div>
@@ -81,7 +81,6 @@ function DialogDescription ({ children, className = "", ...props }: DialogDescri
         >
             {children}
         </p>
-        
     );
 }
 

@@ -49,7 +49,7 @@ export default function SocialAuthForm () {
         <Button 
           key={provider.name}
           size="lg"
-          variant={provider.name === "github" ? "default" : "secondary"}
+          variant={provider.name === "github" ? "default" : "outlined"}
           onClick={() => handleSocialSignIn(provider.name)}
           disabled={isSocialLoading[provider.name]}
         >

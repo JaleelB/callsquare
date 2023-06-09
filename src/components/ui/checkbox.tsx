@@ -14,7 +14,7 @@ export default function Checkbox ({ checked, onChange, label, className="" }: Ch
         type="checkbox"
         checked={checked}
         onChange={onChange}
-        className={`form-checkbox h-4 w-4 text-white data-[state=checked]:bg-slate-900 data-[state=checked]:text-white ${checked ? 'checked:bg-slate-900' : ''}`}
+        className={`form-checkbox h-4 w-4 border-slate-900 accent-slate-900`}
       />
       {label && <span className="text-gray-900 text-sm ">{label}</span>}
     </label>
