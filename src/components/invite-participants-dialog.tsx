@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React, { useState } from 'react'
 import Button from './ui/button'
@@ -5,11 +6,76 @@ import { Dialog, DialogHeader, DialogContent } from './ui/dialog';
 import Input from './ui/input';
 import { Icons } from './ui/icons';
 import CardShell, { type CardProps } from './card-shell';
+import { useForm } from 'react-hook-form';
+import { inviteSchema } from '~/schemas/invite';
+import { env } from '~/env.mjs';
+import { zodResolver } from "@hookform/resolvers/zod";
+import ToastContext from "~/context/toast-context";
+import { type z } from 'zod';
+import { getSession } from 'next-auth/react';
 
+type FormData = z.infer<typeof inviteSchema>
 
 export default function InviteParticipantsDialog (card: CardProps)  {
 
     const [showInviteDialog, setShowInviteDialog] = useState(false);
+    const [isLoading, setIsLoading] = useState(false);
+    const { 
+        register, 
+        handleSubmit, 
+        formState: { errors } 
+    } = useForm<FormData>({
+        resolver: zodResolver(inviteSchema)
+    });
+    const { addToast } = React.useContext(ToastContext);
+
+    async function onSubmit(data: FormData){
+        setIsLoading(true);
+        const currentUser = await getSession();
+      
+        if (currentUser && typeof data.email === 'string' && typeof currentUser.user.email === 'string' && typeof currentUser.user.name === 'string' && typeof currentUser.user.image === 'string') {
+          const recipientUsername = data.email.split('@')[0];
+      
+          try {
+
+            const response = await fetch('/api/sendEmail', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({
+                recipient: data.email,
+                link: `${env.NEXT_PUBLIC_APP_URL}/call/88888888`,
+                recipientUsername,
+                senderImage: currentUser.user.image,
+                invitedByUsername: currentUser.user.name,
+                invitedByEmail: currentUser.user.email,
+              }),
+            });
+      
+            if (!response.ok) {
+              throw new Error('Failed to send email');
+            }
+      
+            setIsLoading(false);
+            return addToast({
+                title: 'Invite sent',
+                message: 'Your invite has been sent successfully',
+                variant: 'default'
+            });
+
+          } catch (error) {
+            setIsLoading(false);
+            return addToast({
+              title: 'Error sending invite',
+              message: 'There was an error sending your invite. Please try again later.',
+              variant: 'destructive'
+            });
+          }
+        }
+      }
+      
+
 
     return (
         <div>
@@ -28,22 +94,26 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                     </div>
                 </div>
                 <DialogContent>
-                    <form>
+                <form onSubmit={handleSubmit(onSubmit)}>
+
                         <div className='flex flex-col md:flex-row justify-between items-end'>
                             <Input 
+                                {...register('email')}
                                 type="email" 
                                 placeholder="Email address" 
                                 required
                                 label="Email"
                             />
+                            {errors.email && typeof errors.email.message === 'string' && <p>{errors.email.message}</p>}
                             <Button 
+                                type="submit"
                                 className='rounded-md mt-2 md:mt-0 md:ml-2 w-full md:w-fit whitespace-nowrap'
                                 size='lg'
                             >
-                                Send Invite
+                                {isLoading && <Icons.spinner width="16" height="16" className='mr-3' color="#fff"/>}
+                                Send invite
                             </Button>
                         </div>
-                        <p className='text-slate-500 text-[13px] mt-1'>You can enter multiple email address by separating them with commas</p>
                     </form>
                     
                     <div className='bg-slate-200 w-full h-[1px] my-8'></div>

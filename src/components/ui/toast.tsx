@@ -27,7 +27,7 @@ export default function Toast ({ id, title, message, variant, removeToast, durat
   const bgColor = variant === 'destructive' ? 'bg-red-500' : 'bg-slate-900';
 
   return (
-    <div className={`fixed w-max bottom-4 md:bottom-8 ${bgColor} right-0 md:right-4 mt-4 mr-4 text-white text-sm py-3 px-6 rounded-md cursor-pointer`}>
+    <div className={`fixed z-50 w-max bottom-4 md:bottom-8 ${bgColor} right-0 md:right-4 mt-4 mr-4 text-white text-sm py-3 px-6 rounded-md cursor-pointer`}>
         <Icons.close
             width={17} 
             height={17} 

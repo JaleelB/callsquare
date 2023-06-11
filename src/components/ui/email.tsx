@@ -57,14 +57,14 @@ export default function InviteEmail ({
                         Hello {recipientUsername},
                     </Text>
                     <Text className="text-black text-[14px] leading-[24px]">
-                        <strong>bukinoshita</strong> (
+                        <strong>{invitedByUsername}</strong> (
                         <Link
                             href={`mailto:${invitedByEmail}`}
                             className="text-blue-600 no-underline"
                         >
                             {invitedByEmail}
                         </Link>
-                        ) has invited you to the join their call team on{' '}
+                        ) has invited you to the join their call on{' '}
                         <strong>Callsquare</strong>.
                     </Text>
                     <Section className="text-center mt-[32px] mb-[32px]">
@@ -74,7 +74,7 @@ export default function InviteEmail ({
                             className="bg-[#0F172A] rounded text-white text-[12px] font-semibold no-underline text-center"
                             href={inviteLink}
                         >
-                            Join the team
+                            Join the call
                         </Button>
                     </Section>
                     <Text className="text-black text-[14px] leading-[24px]">

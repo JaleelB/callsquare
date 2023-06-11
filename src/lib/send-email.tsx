@@ -3,19 +3,21 @@ import nodemailer from 'nodemailer';
 import InviteEmail  from '../components/ui/email';
 import { env } from '~/env.mjs';
 
-export async function sendEmail(
+export type EmailProps = {
   recipient: string, 
   link: string, 
   recipientUsername: string, 
   senderImage: string, 
   invitedByUsername: string, 
   invitedByEmail: string
-) {
+}
+
+export async function sendEmail(props: EmailProps) {
 
   const transporter = nodemailer.createTransport({
     host: env.SMTP_HOST,
-    port: env.SMTP_PORT,
-    secure: false,
+    port: Number(env.SMTP_PORT),
+    secure: true,
     auth: {
       user: env.EMAIL_FROM,
       pass: env.EMAIL_PASSWORD
@@ -25,17 +27,17 @@ export async function sendEmail(
   // Render the email component to a string.
   const html = render(
     <InviteEmail 
-      recipientUsername={recipientUsername} 
-      senderImage={senderImage} 
-      invitedByUsername={invitedByUsername} 
-      invitedByEmail={invitedByEmail}
-      inviteLink={link} 
+      recipientUsername={props.recipientUsername} 
+      senderImage={props.senderImage} 
+      invitedByUsername={props.invitedByUsername} 
+      invitedByEmail={props.invitedByEmail}
+      inviteLink={props.link} 
     />
   );
 
   await transporter.sendMail({
     from: env.EMAIL_FROM,
-    to: recipient,
+    to: props.recipient,
     subject: 'Invitation to Join Call on Callsquare',
     html,
   });

@@ -15,7 +15,7 @@ export default async function CallsHomeLayout({
   if (!user) {
     notFound()
   }
-
+  
   return (
     <div className="flex min-h-screen flex-col">
       <FullNav>
@@ -27,7 +27,7 @@ export default async function CallsHomeLayout({
         />
       </FullNav>
       <main className="flex-1 w-screen my-16 md:my-8 flex items-center">
-          {children}
+        {children}
       </main>
       <SiteFooter/>
     </div>
