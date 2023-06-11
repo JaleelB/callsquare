@@ -1,11 +1,9 @@
 import { render } from '@react-email/render';
 import nodemailer from 'nodemailer';
 import InviteEmail  from '../components/ui/email';
-
+import { env } from '~/env.mjs';
 
 export async function sendEmail(
-  senderEamil: string, 
-  senderToken: string, 
   recipient: string, 
   link: string, 
   recipientUsername: string, 
@@ -13,13 +11,14 @@ export async function sendEmail(
   invitedByUsername: string, 
   invitedByEmail: string
 ) {
-  // Create a Nodemailer transporter using the user's email and token.
+
   const transporter = nodemailer.createTransport({
-    service: 'gmail',
+    host: env.SMTP_HOST,
+    port: env.SMTP_PORT,
+    secure: false,
     auth: {
-      type: 'OAuth2',
-      user: senderEamil,
-      accessToken: senderToken,
+      user: env.EMAIL_FROM,
+      pass: env.EMAIL_PASSWORD
     },
   });
 
@@ -35,7 +34,7 @@ export async function sendEmail(
   );
 
   await transporter.sendMail({
-    from: senderEamil,
+    from: env.EMAIL_FROM,
     to: recipient,
     subject: 'Invitation to Join Call on Callsquare',
     html,
