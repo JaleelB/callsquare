@@ -62,21 +62,24 @@ model Call {
   title           String?
   status          String?
   startTime       DateTime
-  endTime         DateTime
+  endTime         DateTime?
   duration        Int?
   maxParticipants Int?
   inviteLink      String
   participants    Participant[]
+  createdAt       DateTime     @default(now())
 }
 
 model Participant {
   id       String  @id @default(cuid())
   callId   String
   call     Call    @relation(fields: [callId], references: [id], onDelete: Cascade)
-  userId   String?
-  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String
+  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
   name     String
-  email    String?
+  email    String
   role     String
   status   String
+  startTime   DateTime?
+  endTime  DateTime? 
 }
