@@ -94,8 +94,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                     </div>
                 </div>
                 <DialogContent>
-                <form onSubmit={handleSubmit(onSubmit)}>
-
+                    <form onSubmit={handleSubmit(onSubmit)}>
                         <div className='flex flex-col md:flex-row justify-between items-end'>
                             <Input 
                                 {...register('email')}
@@ -104,7 +103,6 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                                 required
                                 label="Email"
                             />
-                            {errors.email && typeof errors.email.message === 'string' && <p>{errors.email.message}</p>}
                             <Button 
                                 type="submit"
                                 className='rounded-md mt-2 md:mt-0 md:ml-2 w-full md:w-fit whitespace-nowrap'
@@ -114,6 +112,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                                 Send invite
                             </Button>
                         </div>
+                        {errors.email && typeof errors.email.message === 'string' && <p className='mt-1 text-sm text-red-500'>{errors.email.message}</p>}
                     </form>
                     
                     <div className='bg-slate-200 w-full h-[1px] my-8'></div>
