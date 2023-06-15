@@ -65,7 +65,7 @@ model Call {
   endTime         DateTime?
   duration        Int?
   maxParticipants Int?
-  inviteLink      String
+  inviteLink      String?
   participants    Participant[]
   createdAt       DateTime     @default(now())
 }
