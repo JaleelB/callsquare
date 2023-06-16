@@ -13,6 +13,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import ToastContext from "~/context/toast-context";
 import { type z } from 'zod';
 import { getSession } from 'next-auth/react';
+import { useCallId } from '~/context/call-id-context';
 
 type FormData = z.infer<typeof inviteSchema>
 
@@ -28,6 +29,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
         resolver: zodResolver(inviteSchema)
     });
     const { addToast } = React.useContext(ToastContext);
+    const { callId } = useCallId();
 
     async function onSubmit(data: FormData){
         setIsLoading(true);
@@ -45,7 +47,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
               },
               body: JSON.stringify({
                 recipient: data.email,
-                link: `${env.NEXT_PUBLIC_APP_URL}/call/88888888`,
+                link: `${env.NEXT_PUBLIC_APP_URL}/call/${callId}`,
                 recipientUsername,
                 senderImage: currentUser.user.image,
                 invitedByUsername: currentUser.user.name,
