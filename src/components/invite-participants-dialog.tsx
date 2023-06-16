@@ -14,6 +14,7 @@ import ToastContext from "~/context/toast-context";
 import { type z } from 'zod';
 import { getSession } from 'next-auth/react';
 import { useCallId } from '~/context/call-id-context';
+import useClipboard from '~/hooks/use-copy';
 
 type FormData = z.infer<typeof inviteSchema>
 
@@ -30,6 +31,8 @@ export default function InviteParticipantsDialog (card: CardProps)  {
     });
     const { addToast } = React.useContext(ToastContext);
     const { callId } = useCallId();
+    const { isCopied, copyToClipboard } = useClipboard();
+    
 
     async function onSubmit(data: FormData){
         setIsLoading(true);
@@ -47,7 +50,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
               },
               body: JSON.stringify({
                 recipient: data.email,
-                link: `${env.NEXT_PUBLIC_APP_URL}/call/${callId}`,
+                link: `${env.NEXT_PUBLIC_APP_URL}/calls/call/${callId}`,
                 recipientUsername,
                 senderImage: currentUser.user.image,
                 invitedByUsername: currentUser.user.name,
@@ -75,7 +78,19 @@ export default function InviteParticipantsDialog (card: CardProps)  {
             });
           }
         }
-      }
+    }
+
+    async function handleCopy(text: string){
+
+        await copyToClipboard(text);
+        if(isCopied){
+            addToast({
+                title: 'Copied to clipboard',
+                message: 'The invite link has been copied to your clipboard.',
+                variant: 'default'
+            });
+        }
+    }
       
 
 
@@ -121,7 +136,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                     <div className='flex flex-col md:flex-row justify-between items-end mb-2'>
                         <Input 
                             disabled 
-                            placeholder="fenfaebfjgnkagka gld nglkmdsngl" 
+                            placeholder={`${env.NEXT_PUBLIC_APP_URL}/calls/call/${callId}`} 
                             required
                             label="Copy invite link"
                         />
@@ -129,6 +144,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                             variant='secondary' 
                             size='lg'
                             className="rounded-md flex mt-2 md:mt-0 md:ml-2 ml-auto w-full md:w-fit"
+                            onClick={() => handleCopy(`${env.NEXT_PUBLIC_APP_URL}/calls/call/${callId}`)}
                         >
                             Copy
                         </Button>

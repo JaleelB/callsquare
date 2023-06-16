@@ -30,8 +30,7 @@ export default function CreateCallCard (card: CardProps)  {
             })
         }
 
-        router.push(`/calls/${callId}`)
-
+        // router.push(`/calls/call/${callId}`)
     }
 
     return (
