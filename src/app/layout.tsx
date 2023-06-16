@@ -1,6 +1,6 @@
 import ToastProvider from '~/components/toast-provider';
-import { HMSRoomProvider } from '@100mslive/react-sdk';
 import '../styles/globals.css'
+import RoomProvider from '~/components/room-provider';
 
 export default function RootLayout({
   children,
@@ -11,11 +11,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
-        <HMSRoomProvider>
+        <RoomProvider>
           <ToastProvider>
             {children}
           </ToastProvider>
-        </HMSRoomProvider>
+        </RoomProvider>
       </body>
     </html>
   );
