@@ -50,7 +50,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
               },
               body: JSON.stringify({
                 recipient: data.email,
-                link: `${env.NEXT_PUBLIC_APP_URL}/calls/call/${callId}`,
+                link: `${env.NEXT_PUBLIC_APP_URL}/call/${callId}`,
                 recipientUsername,
                 senderImage: currentUser.user.image,
                 invitedByUsername: currentUser.user.name,
@@ -144,7 +144,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                             variant='secondary' 
                             size='lg'
                             className="rounded-md flex mt-2 md:mt-0 md:ml-2 ml-auto w-full md:w-fit"
-                            onClick={() => handleCopy(`${env.NEXT_PUBLIC_APP_URL}/calls/call/${callId}`)}
+                            onClick={() => handleCopy(`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`)}
                         >
                             Copy
                         </Button>
