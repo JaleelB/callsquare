@@ -57,6 +57,7 @@ model VerificationToken {
 
 model Call {
   id              String       @id @default(cuid())
+  name            String
   userId          String
   user            User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   title           String?
