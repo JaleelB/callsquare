@@ -3,6 +3,8 @@ import { z } from "zod"
 import { env } from "~/env.mjs"
 import { authOptions } from "~/server/auth"
 import { prisma } from "~/server/db"
+import { type RoomCodeResponse } from "~/types/room"
+import { cookies } from 'next/headers'
 
 const callCreateSchema = z.object({
     name: z.string().uuid(),
@@ -80,6 +82,10 @@ export async function POST(req: Request) {
                 startTime: new Date(),
             },
         });
+
+        //store room code in session
+        const roomCode = await getRoomCode(newCall.id);
+        cookies().set('room-code', roomCode)
     
         return new Response(JSON.stringify({ success: true }));
 
@@ -110,4 +116,19 @@ async function createRoom(name: string){
 
     const { id }: Room = await response.json() as Room;
     return id;
+}
+
+async function getRoomCode(callId: string){
+    const roomCodeResponse = await fetch(`/call/code`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          callName: callId,
+        }),
+    })
+
+    const codeResponse: RoomCodeResponse = await roomCodeResponse.json() as RoomCodeResponse;
+    return codeResponse.code;
 }
