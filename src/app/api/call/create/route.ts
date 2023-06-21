@@ -3,8 +3,8 @@ import { z } from "zod"
 import { env } from "~/env.mjs"
 import { authOptions } from "~/server/auth"
 import { prisma } from "~/server/db"
-import { type RoomCodeResponse } from "~/types/room"
 import { cookies } from 'next/headers'
+import { generateManagementToken } from "~/server/management-token"
 
 const callCreateSchema = z.object({
     name: z.string().uuid(),
@@ -84,8 +84,7 @@ export async function POST(req: Request) {
         });
 
         //store room code in session
-        const roomCode = await getRoomCode(newCall.id);
-        cookies().set('room-code', roomCode)
+        cookies().set('room-id', newCall.id)
     
         return new Response(JSON.stringify({ success: true }));
 
@@ -97,10 +96,13 @@ export async function POST(req: Request) {
 }
 
 async function createRoom(name: string){
+
+    const managementToken = await generateManagementToken();
+
     const response = await fetch(`${env.TOKEN_ENDPOINT}/rooms`, {
       method: 'POST',
       headers: {
-        'Authorization': `Bearer ${env.AUTH_TOKEN}`,
+        'Authorization': `Bearer ${managementToken}`,
         'Content-Type': 'application/json'
       },
       body: JSON.stringify({
@@ -118,17 +120,4 @@ async function createRoom(name: string){
     return id;
 }
 
-async function getRoomCode(callId: string){
-    const roomCodeResponse = await fetch(`/call/code`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          callName: callId,
-        }),
-    })
 
-    const codeResponse: RoomCodeResponse = await roomCodeResponse.json() as RoomCodeResponse;
-    return codeResponse.code;
-}

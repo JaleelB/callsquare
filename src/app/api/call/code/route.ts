@@ -3,6 +3,7 @@ import { z } from "zod"
 import { env } from "~/env.mjs"
 import { authOptions } from "~/server/auth"
 import { prisma } from "~/server/db"
+import { generateManagementToken } from "~/server/management-token"
 
 const roomCodeSchema = z.object({
     callName: z.string(),
@@ -48,10 +49,11 @@ export async function POST(req: Request) {
         const roomId = call.id;
         const role = participant ? participant.role : "guest";
 
+        const token = await generateManagementToken();
         const response = await fetch(`${env.TOKEN_ENDPOINT}/room-codes/room/${roomId}/role/${role}`, {
             method: 'POST',
             headers: {
-              'Authorization': `Bearer ${env.AUTH_TOKEN}`,
+              'Authorization': `Bearer ${token}`,
               'Content-Type': 'application/json'
             },
         });
@@ -64,6 +66,7 @@ export async function POST(req: Request) {
         return new Response(JSON.stringify({ code }));
 
     } catch (error) {
-      return new Response(null, { status: 500 })
+        console.error(error)
+        return new Response(null, { status: 500 })
     }
 }

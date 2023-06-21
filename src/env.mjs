@@ -31,6 +31,8 @@ export const env = createEnv({
     AUTH_TOKEN: z.string().min(1),
     TEMPLATE_ID: z.string().min(1),
     TOKEN_ENDPOINT: z.string().url().min(1),
+    ACCESS_KEY: z.string().min(1),
+    APP_SECRET: z.string().min(1),
   },
 
   client: {
@@ -57,6 +59,8 @@ export const env = createEnv({
     AUTH_TOKEN: process.env.AUTH_TOKEN,
     TEMPLATE_ID: process.env.TEMPLATE_ID,
     TOKEN_ENDPOINT: process.env.TOKEN_ENDPOINT,
+    ACCESS_KEY: process.env.ACCESS_KEY,
+    APP_SECRET: process.env.APP_SECRET,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**
