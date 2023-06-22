@@ -2,8 +2,6 @@ import { z } from "zod";
 
 export const joinCallFormSchema = z.object({
     name: z.string().optional(),
-    meetingLinkOrId: z.string(),
-    audio: z.boolean(),
-    video: z.boolean(),
+    meetingLink: z.string().nonempty("A meeting address link is required to join a call"),
 });
   

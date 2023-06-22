@@ -9,6 +9,14 @@ import CardShell, { type CardProps } from './card-shell';
 import ToastContext from '~/context/toast-context';
 import { useRouter } from 'next/navigation';
 import { useCallId } from '~/context/call-id-context';
+import { joinCallFormSchema } from '~/schemas/call';
+import { type z } from 'zod';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
+import { extractId } from '~/lib/extract-id';
+
+
+type FormData = z.infer<typeof joinCallFormSchema>
 
 export default function JoinCallDialog (card: CardProps)  {
 
@@ -22,21 +30,28 @@ export default function JoinCallDialog (card: CardProps)  {
     const router = useRouter()
     const { callId } = useCallId();
 
-    async function joinCall() {
+    const { 
+        register, 
+        handleSubmit, 
+        formState: { errors } 
+    } = useForm<FormData>({
+        resolver: zodResolver(joinCallFormSchema)
+    });
+
+    async function joinCall(data: FormData) {
+
         const response = await fetch(`/api/call/join`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: callId,
+            id: extractId(data.meetingLink),
             name: name,
-            audio: audio,
-            video: video,
           }),
         })
       
-        console.log(response)
+        
         if (!response?.ok) {
             return addToast({
                 title: "Something went wrong.",
@@ -45,7 +60,7 @@ export default function JoinCallDialog (card: CardProps)  {
             })
         }
 
-        router.push(`/calls/call/${callId}`)
+        router.push(`/call/${callId}`)
     }
 
     return (
@@ -54,8 +69,9 @@ export default function JoinCallDialog (card: CardProps)  {
             <Dialog open={showJoinDialog}>
                 <DialogHeader className='mb-6'>Join a call</DialogHeader>
                 <DialogContent>
-                    <form>
+                    <form onSubmit={handleSubmit(joinCall)}>
                         <Input 
+                            {...register('name', { required: true })}
                             type="text" 
                             placeholder="Your name (optional)" 
                             className='mb-2'
@@ -64,34 +80,46 @@ export default function JoinCallDialog (card: CardProps)  {
                             onChange={(e) => setName(e.target.value)}
                         />
                         <Input 
-                            type="text" 
+                            {...register('meetingLink')}
+                            type="url" 
                             placeholder="Meeting link or ID" 
-                            required 
-                            className='mb-4'
+                            className={`${errors.meetingLink ? 'mb-2' : 'mb-4'}`}
                             label='Meeting link'
                             value={meetingLink}
                             onChange={(e) => setMeetingLink(e.target.value)}
                         />
-                        <Checkbox checked={audio} onChange={() => setAudio(!audio)} label="Don't join with audio" className='my-2' />
-                        <Checkbox checked={video} onChange={() => setVideo(!video)} label="Turn off my video" />
+                        {errors.meetingLink && typeof errors.meetingLink.message === 'string' && <p className='mb-4 text-sm text-red-500'>{errors.meetingLink.message}</p>}
+                        <Checkbox 
+                            checked={audio} 
+                            onChange={() => setAudio(!audio)} 
+                            label="Don't join with audio" 
+                            className='my-2' 
+                            disabled={true}
+                        />
+                        <Checkbox 
+                            checked={video} 
+                            onChange={() => setVideo(!video)} 
+                            label="Turn off my video" 
+                            disabled={true}
+                        />
+
+                        <DialogFooter className='flex flex-col-reverse md:flex-row mt-6 md:mt-4'>
+                            <Button 
+                                variant='secondary' 
+                                className="rounded-md flex ml-auto w-full md:w-fit" 
+                                onClick={() => setShowJoinDialog(false)}
+                            >
+                                Cancel
+                            </Button>
+                            <Button 
+                                type='submit'
+                                className='rounded-md mt-2 mb-2 md:mb-0 md:mt-0 md:ml-2 w-full md:w-fit'
+                            >
+                                Join Call
+                            </Button>
+                        </DialogFooter>
                     </form>
                 </DialogContent>
-                <DialogFooter className='flex flex-col-reverse md:flex-row mt-6 md:mt-4'>
-                    <Button 
-                        variant='secondary' 
-                        className="rounded-md flex ml-auto w-full md:w-fit" 
-                        onClick={() => setShowJoinDialog(false)}
-                    >
-                        Cancel
-                    </Button>
-                    <Button 
-                        type='submit'
-                        onClick={joinCall}
-                        className='rounded-md mt-2 mb-2 md:mb-0 md:mt-0 md:ml-2 w-full md:w-fit'
-                    >
-                        Join Call
-                    </Button>
-                </DialogFooter>
             </Dialog>
         </div>
     )

@@ -116,8 +116,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                             <Input 
                                 {...register('email')}
                                 type="email" 
-                                placeholder="Email address" 
-                                required
+                                placeholder="Email address"
                                 label="Email"
                             />
                             <Button 
@@ -129,14 +128,14 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                                 Send invite
                             </Button>
                         </div>
-                        {errors.email && typeof errors.email.message === 'string' && <p className='mt-1 text-sm text-red-500'>{errors.email.message}</p>}
+                        {errors.email && typeof errors.email.message === 'string' && <p className='mt-2 text-sm text-red-500'>{errors.email.message}</p>}
                     </form>
                     
                     <div className='bg-slate-200 w-full h-[1px] my-8'></div>
                     <div className='flex flex-col md:flex-row justify-between items-end mb-2'>
                         <Input 
                             disabled 
-                            placeholder={`${env.NEXT_PUBLIC_APP_URL}/calls/call/${callId}`} 
+                            placeholder={`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`} 
                             required
                             label="Copy invite link"
                         />
