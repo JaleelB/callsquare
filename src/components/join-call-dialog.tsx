@@ -9,11 +9,13 @@ import CardShell, { type CardProps } from './card-shell';
 import ToastContext from '~/context/toast-context';
 import { useRouter } from 'next/navigation';
 import { useCallId } from '~/context/call-id-context';
+import Cookies from 'js-cookie';
 import { joinCallFormSchema } from '~/schemas/call';
 import { type z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { extractId } from '~/lib/extract-id';
+import { Icons } from './ui/icons';
 
 
 type FormData = z.infer<typeof joinCallFormSchema>
@@ -25,6 +27,7 @@ export default function JoinCallDialog (card: CardProps)  {
     const [name, setName] = useState('');
     const [meetingLink, setMeetingLink] = useState('');
     const [showJoinDialog, setShowJoinDialog] = useState(false);
+    const [isJoinCallLoading, setIsJoinCallLoading] = useState(false);
 
     const { addToast } = React.useContext(ToastContext);
     const router = useRouter()
@@ -40,26 +43,35 @@ export default function JoinCallDialog (card: CardProps)  {
 
     async function joinCall(data: FormData) {
 
+        setIsJoinCallLoading(true);
+        const callRoom = extractId(data.meetingLink);
+        console.log(callRoom)
+
         const response = await fetch(`/api/call/join`, {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: extractId(data.meetingLink),
+            id: callRoom,
             name: name,
           }),
-        })
+        }).catch(error => {
+            console.error('Error during fetch:', error);
+          });
       
         
         if (!response?.ok) {
+            setIsJoinCallLoading(false);
             return addToast({
                 title: "Something went wrong.",
                 message: "This call cannot be joined. Please try again.",
                 variant: "destructive",
             })
         }
-
+        
+        Cookies.set("room-name", callId)
+        setIsJoinCallLoading(false);
         router.push(`/call/${callId}`)
     }
 
@@ -108,13 +120,16 @@ export default function JoinCallDialog (card: CardProps)  {
                                 variant='secondary' 
                                 className="rounded-md flex ml-auto w-full md:w-fit" 
                                 onClick={() => setShowJoinDialog(false)}
+                                disabled={isJoinCallLoading}
                             >
                                 Cancel
                             </Button>
                             <Button 
                                 type='submit'
                                 className='rounded-md mt-2 mb-2 md:mb-0 md:mt-0 md:ml-2 w-full md:w-fit'
+                                disabled={isJoinCallLoading}
                             >
+                                {isJoinCallLoading && <Icons.spinner color="#fff" width={14} height={14} className='mr-2' />}
                                 Join Call
                             </Button>
                         </DialogFooter>

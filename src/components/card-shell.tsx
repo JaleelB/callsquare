@@ -9,14 +9,16 @@ export interface CardProps {
     icon: ReactNode;
     buttonText: string;
     buttonIcon: ReactNode;
+    loadingIcon: ReactNode;
 }
 
 export interface CardShellProps {
     card: CardProps;
     func: () => void;
+    isLoading?: boolean;    
 }
 
-export default function CardShell({ card, func }: CardShellProps) {
+export default function CardShell({ card, func, isLoading }: CardShellProps) {
   return (
     <CardContainer className="w-full h-[230px]">
         <CardHeader className="flex justify-between">
@@ -26,11 +28,11 @@ export default function CardShell({ card, func }: CardShellProps) {
             <Button 
                 size="sm" 
                 variant="transparent" 
-                className="shadow rounded-full"
+                className={`shadow rounded-full ${isLoading ? 'flex gap-3' : ''}`}
                 onClick={func}
             >
                 {card.buttonText}
-                {card.buttonIcon}
+                {isLoading ? card.loadingIcon : card.buttonIcon}
             </Button>
         </CardHeader>
         <CardContent>

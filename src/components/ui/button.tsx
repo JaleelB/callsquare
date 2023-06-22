@@ -6,6 +6,7 @@ type ButtonSize = 'default' | 'sm' | 'lg';
 interface ButtonProps extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     variant?: ButtonVariant;
     size?: ButtonSize;
+    onClick?: () => void;
 }
 
 export default function Button({

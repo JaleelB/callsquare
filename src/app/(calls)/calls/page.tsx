@@ -21,6 +21,7 @@ const cardsData: CardProps[] = [
       description: "Create a call and invite others to join in conversation, discussion, or collaboration.",
       icon: <Icons.video color="white" width={24} height={14} />,
       buttonText: "Create",
+      loadingIcon: <Icons.spinner color="#0F172A" width={14} height={14} />,
       buttonIcon: <Icons.add color="#0F172A" className="ml-2" width={16} height={16} />,
     },
     {
@@ -28,12 +29,14 @@ const cardsData: CardProps[] = [
       description: "Join a call by to participate in a conversation, discussion, or collaboration.",
       icon: <Icons.add color="white" width={16} height={16} />,
       buttonText: "Join",
+      loadingIcon: <Icons.spinner color="#0F172A" width={14} height={14} />,
       buttonIcon: <Icons.add color="#0F172A" className="ml-2" width={16} height={16} />,
     },
     {
       title: "Invite Participants",
       description: "Invite your friends or participants to join your call and engage in a conversation.",
       icon: <Icons.invite color="white" width={24} height={24} />,
+      loadingIcon: <Icons.spinner color="#0F172A" width={14} height={14} />,
       buttonText: "Invite",
       buttonIcon: <Icons.add color="#0F172A" className="ml-2" width={16} height={16} />,
     }
