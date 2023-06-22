@@ -1,6 +1,7 @@
 import ToastProvider from '~/components/toast-provider';
 import '../styles/globals.css'
 import RoomProvider from '~/components/room-provider';
+import CallIdProvider from '~/context/call-id-context';
 
 export default function RootLayout({
   children,
@@ -12,9 +13,11 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <RoomProvider>
-          <ToastProvider>
-            {children}
-          </ToastProvider>
+          <CallIdProvider>
+            <ToastProvider>
+              {children}
+            </ToastProvider>
+          </CallIdProvider>
         </RoomProvider>
       </body>
     </html>
