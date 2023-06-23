@@ -1,4 +1,5 @@
 import { getServerSession } from "next-auth/next"
+import { cookies } from "next/headers"
 import { z } from "zod"
 import { authOptions } from "~/server/auth"
 import { prisma } from "~/server/db"
@@ -35,11 +36,10 @@ export async function POST(req: Request) {
         const body = joinCallSchema.parse(json)
 
         const call = await prisma.call.findFirst({
-            where: { status: 'created', id: body.id },
+            where: { status: 'created', name: body.id },
         });
       
         if (!call || call.status === 'ended') {
-            // return res.status(404).json({ message: 'No available call to join' });
             return new Response("Not Found", { status: 404 })
         }
     
@@ -56,17 +56,24 @@ export async function POST(req: Request) {
                     name: body.name ? body.name : user.name,
                     role: "guest",
                     status: 'joined',
-                    startTime: new Date(),
+                    startTime: new Date()
                 },
             });
         } else {
             participant = await prisma.participant.update({
                 where: { id: user.id },
-                data: { callId: call.id },
+                data: { 
+                    callId: call.id,
+                    status: 'joined',
+                    startTime: new Date()
+                },
             });
+            
         }
+
+        //store room code in session
+        cookies().set('room-id', call.id)
         
-    
         return new Response(JSON.stringify(participant))
 
     } catch (error) {
