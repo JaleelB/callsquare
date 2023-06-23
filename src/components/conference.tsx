@@ -7,7 +7,7 @@ export default function Conference() {
     const peers = useHMSStore(selectPeers);
 
     return (
-        <div className="w-full h-[85%] flex flex-grow items-center pt-24">
+        <div className="w-full conference pt-4">
             {peers.map((peer) => (
                 <Peer key={peer.id} peer={peer} />
             ))}

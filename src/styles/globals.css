@@ -1,3 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.conference {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(100%, 1fr));
+    gap: 1em;
+    padding-inline: 1rem;
+    height: calc(100% - 7rem);
+}
+
+@media (min-width: 600px) {
+    .conference {
+        grid-template-columns: repeat(auto-fit, minmax(600px, 1fr));
+    }
+}
+

@@ -107,9 +107,10 @@ export default function CallPage(){
 
 
     return(
-        <section className="flex w-full h-screen flex-col justify-between bg-neutral-950 text-gray-200">
+        <section className="flex flex-col w-full h-screen overflow-hidden bg-neutral-950 text-gray-200">
             <Conference/>
             <CallFooter/>
         </section>
+
     )
 }

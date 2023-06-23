@@ -45,7 +45,6 @@ export default function JoinCallDialog (card: CardProps)  {
 
         setIsJoinCallLoading(true);
         const callRoom = extractId(data.meetingLink);
-        console.log(callRoom)
 
         const response = await fetch(`/api/call/join`, {
           method: "POST",
@@ -70,9 +69,9 @@ export default function JoinCallDialog (card: CardProps)  {
             })
         }
         
-        Cookies.set("room-name", callId)
+        Cookies.set("room-name", callRoom)
         setIsJoinCallLoading(false);
-        router.push(`/call/${callId}`)
+        router.push(`/call/${callRoom}`)
     }
 
     return (
