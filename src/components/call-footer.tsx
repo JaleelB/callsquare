@@ -1,5 +1,5 @@
 "use client"; 
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useAVToggle, useHMSActions } from '@100mslive/react-sdk';
 import {
   MicOffIcon,
@@ -7,6 +7,7 @@ import {
   VideoOffIcon,
   VideoOnIcon,
   HangUpIcon,
+  ShareScreenIcon,
 } from '@100mslive/react-icons';
 import Button from './ui/button';
 import { useRouter } from 'next/navigation';
@@ -24,17 +25,49 @@ export default function CallFooter () {
   const actions = useHMSActions();
   const router = useRouter();
   const { addToast } = React.useContext(ToastContext);
+  const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
+
+  useEffect(() => {
+
+    async function enableScreenShare() {
+      if(isScreenShareEnabled){
+        try {
+          await actions.setScreenShareEnabled(true);
+        } catch (error) {
+          return addToast({
+            title: "Something went wrong.",
+            message: "Your screen cannot be shared. Please try again.",
+            variant: "destructive",
+          })
+        }
+      } else {
+        try {
+          await actions.setScreenShareEnabled(false);
+        } catch (error) {
+          return addToast({
+            title: "Something went wrong.",
+            message: "There is an issue disabling screen share. Please try again.",
+            variant: "destructive",
+          })
+        }
+      }
+    }
+
+    void enableScreenShare();
+    
+  }, [actions, addToast, isScreenShareEnabled])
 
   async function leaveCall() {
+    
     const response = await fetch(`/api/call/leave`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
-      }
+      },
     })
 
     if(!response.ok){
-      return addToast({
+      addToast({
         title: "Something went wrong.",
         message: "Your call cannot be left. Please try again.",
         variant: "destructive",
@@ -75,8 +108,15 @@ export default function CallFooter () {
         <Button 
           size="sm"
           variant="transparent" 
-          // eslint-disable-next-line @typescript-eslint/no-misused-promises
-          onClick={() => leaveCall()}
+          onClick={()=> setIsScreenShareEnabled(!isScreenShareEnabled)}
+          className="rounded-full flex justify-center items-center py-6 px-4 bg-neutral-800"
+        >
+          <ShareScreenIcon color="white" width={20} height={20}/>
+        </Button>
+        <Button 
+          size="sm"
+          variant="transparent" 
+          onClick={() => void leaveCall()}
           className="rounded-full flex justify-center py-6 bg-red-500"
         >
           <HangUpIcon color='white' width={25} height={25} />
