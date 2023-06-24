@@ -62,7 +62,7 @@ export async function POST(req: Request) {
             throw new Error('Error creating call');
         }
 
-        const inviteLink = `${env.NEXT_PUBLIC_APP_URL}/call/${newCall.id}`;
+        const inviteLink = `${env.NEXT_PUBLIC_APP_URL}/call/${newCall.name}`;
 
         // Update the call with the invite link
         await prisma.call.update({
