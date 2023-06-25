@@ -50,12 +50,13 @@ export async function POST(req: Request) {
         if (!participant) {
             participant = await prisma.participant.create({
                 data: {
-                    callId: call.id,
+                    callName: call.name,
                     userId: user.id,
                     email: user.email,
                     name: body.name ? body.name : user.name,
                     role: "guest",
                     status: 'joined',
+                    callId: call.id,
                     startTime: new Date()
                 },
             });
@@ -63,7 +64,7 @@ export async function POST(req: Request) {
             participant = await prisma.participant.update({
                 where: { id: user.id },
                 data: { 
-                    callId: call.id,
+                    callName: call.name,
                     status: 'joined',
                     startTime: new Date()
                 },
@@ -71,7 +72,6 @@ export async function POST(req: Request) {
             
         }
 
-        //store room code in session
         cookies().set('room-id', call.id)
         
         return new Response(JSON.stringify(participant))
