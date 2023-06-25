@@ -8,7 +8,6 @@ import Input from './ui/input';
 import CardShell, { type CardProps } from './card-shell';
 import ToastContext from '~/context/toast-context';
 import { useRouter } from 'next/navigation';
-import { useCallId } from '~/context/call-id-context';
 import Cookies from 'js-cookie';
 import { joinCallFormSchema } from '~/schemas/call';
 import { type z } from 'zod';
@@ -31,7 +30,6 @@ export default function JoinCallDialog (card: CardProps)  {
 
     const { addToast } = React.useContext(ToastContext);
     const router = useRouter()
-    const { callId } = useCallId();
 
     const { 
         register, 

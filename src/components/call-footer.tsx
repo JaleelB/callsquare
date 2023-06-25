@@ -10,8 +10,10 @@ import {
   ShareScreenIcon,
 } from '@100mslive/react-icons';
 import Button from './ui/button';
-import { useRouter } from 'next/navigation';
+import { useParams, useRouter } from 'next/navigation';
 import ToastContext from '~/context/toast-context';
+import Cookies from 'js-cookie';
+import { extractId } from '~/lib/extract-id';
 
 
 export default function CallFooter () {
@@ -26,6 +28,8 @@ export default function CallFooter () {
   const router = useRouter();
   const { addToast } = React.useContext(ToastContext);
   const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
+  const params = useParams();
+  const roomId = Cookies.get("room-id");
 
   useEffect(() => {
 
@@ -58,12 +62,17 @@ export default function CallFooter () {
   }, [actions, addToast, isScreenShareEnabled])
 
   async function leaveCall() {
+    const roomName = Cookies.get("room-name");
     
     const response = await fetch(`/api/call/leave`, {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        callName: roomName ? roomName : extractId(params.slug as string),
+        roomId: roomId,
+      }),
     })
 
     if(!response.ok){

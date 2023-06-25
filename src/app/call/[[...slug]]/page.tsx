@@ -9,6 +9,7 @@ import ToastContext from "~/context/toast-context";
 import { useParams, useRouter } from "next/navigation";
 import { getSession } from "next-auth/react";
 import { type RoomCodeResponse } from "~/types/room";
+import { extractId } from "~/lib/extract-id";
 
 
 export default function CallPage(){
@@ -19,12 +20,13 @@ export default function CallPage(){
     const hmsActions = useHMSActions();
     const { addToast } = React.useContext(ToastContext);
     const actions = useHMSActions();
-
+    const roomName = Cookies.get("room-name");
+    const roomId = Cookies.get("room-id");
+    
     useEffect(() => {
 
         async function joinCall(){
-            // use room code to fetch auth token
-            const roomId = Cookies.get("room-id");
+            
             if (!roomId) {
                 console.error("Room id is not defined");
                 return;
@@ -36,10 +38,12 @@ export default function CallPage(){
                   "Content-Type": "application/json",
                 },
                 body: JSON.stringify({
-                  callName: params.slug,
+                  callName: roomName ? roomName : params.slug,
+                  roomId: roomId
                 }),
             })
-        
+
+             // use room code to fetch auth token
             const codeResponse: RoomCodeResponse = await roomCodeResponse.json() as RoomCodeResponse;
             const roomCode = codeResponse.code;
             const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
@@ -50,7 +54,6 @@ export default function CallPage(){
                 if(session && session.user.name){
                     const userName = session.user.name;
                     await hmsActions.join({ userName, authToken });
-                    console.log("joined room")
                 } else {
                     console.error("Session or user name is not defined");
                     addToast({
@@ -73,7 +76,7 @@ export default function CallPage(){
         }
         void joinCall();
 
-    }, [hmsActions, addToast, params.slug, router]);
+    }, [hmsActions, addToast, params.slug, router, roomName, roomId]);
 
     useEffect(() => {
         window.onunload = () => {
@@ -84,7 +87,11 @@ export default function CallPage(){
                       method: "PATCH",
                       headers: {
                         "Content-Type": "application/json",
-                      }
+                      },
+                      body: JSON.stringify({
+                        callName: roomName ? roomName : extractId(params.slug as string),
+                        roomId: roomId,
+                      }),
                     })
                 
                     if(response.ok){
@@ -96,14 +103,14 @@ export default function CallPage(){
                     } 
                     
                     await actions.leave();
-                    router.push("/calls")
+                    // router.push("/calls")
                 }
 
                 void leaveCall();
             }
         };
 
-    }, [actions, addToast, hmsActions, isConnected, router]);
+    }, [actions, addToast, hmsActions, isConnected, params.slug, roomId, roomName, router]);
 
 
     return(

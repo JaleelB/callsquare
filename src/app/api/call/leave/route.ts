@@ -1,8 +1,31 @@
 import { prisma } from "~/server/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
+import { z } from "zod";
 
-export async function PATCH() {
+const leaveCallSchema = z.object({
+    callName: z.string().uuid(),
+    roomId: z.string().min(8),
+})
+
+interface leaveCallBody {
+    callName: string;
+    roomId: string
+}
+
+interface Participant {
+    id: string;
+    callName: string;
+    userId: string;
+    name: string;
+    email: string;
+    role: string;
+    status: string;
+    startTime: Date | null;
+    endTime: Date | null;
+}
+
+export async function PATCH(req: Request) {
 
     try{
         const session = await getServerSession(authOptions)
@@ -16,9 +39,13 @@ export async function PATCH() {
             throw new Error('You must be logged in to join a call');
         }   
 
+        const json: leaveCallBody = await req.json() as leaveCallBody;
+        const body = leaveCallSchema.parse(json)
+
         const participant = await prisma.participant.findFirst({
             where: { 
-              userId: user.id,
+                userId: user.id,
+                callName: body.callName,
             },
         });
           
@@ -27,30 +54,28 @@ export async function PATCH() {
         }
 
         const endTime = new Date();
-        const updatedParticipant = await prisma.participant.update({
+        const updatedParticipant: Participant = await prisma.participant.update({
             where: { 
-              id: participant.id,
+                id: participant.id,
             },
             data: { 
               status: 'left', 
-              endTime, 
+              endTime
             },
         });
 
         // Check if there are any other participants in the call
-        const otherParticipants = await prisma.participant.findMany({
+        const otherParticipants: Participant[] = await prisma.participant.findMany({
             where: {
-                callId: participant.callId,
+                callName: updatedParticipant.callName,
                 status: 'joined',
             },
         });
-    
-        //room is not ending when last participant leaves. debug why
 
         // If there are no other participants, end the call
         if (otherParticipants.length === 0) {
             await prisma.call.update({
-                where: { id: participant.callId },
+                where: { id: body.roomId },
                 data: { 
                     status: 'ended',
                     endTime,
