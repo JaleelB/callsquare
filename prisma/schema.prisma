@@ -74,6 +74,7 @@ model Call {
 model Participant {
   id       String  @id @default(cuid())
   callId   String
+  callName  String
   call     Call    @relation(fields: [callId], references: [id], onDelete: Cascade)
   userId   String
   user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
