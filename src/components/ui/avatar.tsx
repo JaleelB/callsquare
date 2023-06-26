@@ -5,8 +5,8 @@ export default function Avatar ({ name }: { name: string }) {
   return (
     <div 
         className='
-            flex justify-center items-center font-bold min-w-[150px] min-h-[150px] w-[15vw] h-[15vw] 
-            max-w-[300px] max-h-[300px] rounded-full text-gray-200 bg-neutral-700 text-[4vw]
+            flex justify-center items-center font-bold min-w-[100px] min-h-[100px] w-[15vw] h-[15vw] 
+            max-w-[300px] max-h-[300px] rounded-full text-gray-200 bg-neutral-700 text-[6vw] sm:text-[4vw]
             absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2
         '
     >
