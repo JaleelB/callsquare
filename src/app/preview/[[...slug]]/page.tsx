@@ -41,7 +41,7 @@ export default function CallPreviewPage(){
 
         async function startPreview(){
  
-            const roomCodeResponse = await fetch(`/api/preview/code`, {
+            const roomCodeResponse = await fetch(`/api/call/code`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

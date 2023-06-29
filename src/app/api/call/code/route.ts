@@ -22,14 +22,13 @@ export async function POST(req: Request) {
     try {
         const session = await getServerSession(authOptions)
     
-        if (!session) {
-            return new Response("Unauthorized", { status: 403 })
+        let userId;
+        if (session) {
+            const { user } = session
+            if (user && user.id) {
+                userId = user.id;
+            }
         }
-    
-        const { user } = session
-        if (!user || !user.id ) {
-            throw new Error('You must be logged in to get a room code');
-        }   
 
         const json: RoomCodeBody = await req.json() as RoomCodeBody;
         const body = roomCodeSchema.parse(json)
@@ -42,12 +41,17 @@ export async function POST(req: Request) {
             return new Response("Not Found", { status: 404 })
         }
 
-        const participant = await prisma.participant.findUnique({
-            where: { id: user.id },
-        });
+        let role = "guest";
+        if (userId) {
+            const participant = await prisma.participant.findUnique({
+                where: { id: userId },
+            });
+            if (participant) {
+                role = participant.role;
+            }
+        }
 
         const roomId = call.id;
-        const role = participant ? participant.role : "guest";
 
         const token = await generateManagementToken();
         const response = await fetch(`${env.TOKEN_ENDPOINT}/room-codes/room/${roomId}/role/${role}`, {
