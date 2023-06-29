@@ -39,7 +39,6 @@ export default function CallPage(){
                 },
                 body: JSON.stringify({
                   callName: roomName ? roomName : params.slug,
-                  roomId: roomId
                 }),
             })
 
