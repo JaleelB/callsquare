@@ -1,5 +1,6 @@
 import { getCurrentUser } from "~/lib/session";
 import { redirect } from "next/navigation";
+import { cookies } from "next/headers";
 
 export default async function CallLayout({
     children,
@@ -12,8 +13,9 @@ export default async function CallLayout({
 }) {
 
   const user = await getCurrentUser();
+  const roomName = cookies().get("room-name")?.value;
 
-  if (!user) {
+  if (!user  || !roomName) {
     redirect(`/preview/${params.slug}`)
   }
 
