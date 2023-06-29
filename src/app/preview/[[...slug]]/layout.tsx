@@ -10,7 +10,7 @@ export default function CallPreviewLayout({
 }) {
 
   return (
-    <>
+    <div>
       <div className="absolute">
         <FullNav>
             <Button className="rounded-md">
@@ -19,12 +19,11 @@ export default function CallPreviewLayout({
                 <Icons.invite className="ml-2" width={20} height={20} color="#fff" />
               </Link> 
             </Button>
-          
         </FullNav>
       </div>
       <main className="w-screen h-screen fixed">
-        {children}
+          {children}
       </main>
-    </>
+    </div>
   );
 }
