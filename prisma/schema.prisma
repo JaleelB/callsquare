@@ -76,10 +76,10 @@ model Participant {
   callId   String
   callName  String
   call     Call    @relation(fields: [callId], references: [id], onDelete: Cascade)
-  userId   String
-  user     User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId   String?
+  user     User?   @relation(fields: [userId], references: [id], onDelete: Cascade)
   name     String
-  email    String
+  email    String?
   role     String
   status   String
   startTime   DateTime?
