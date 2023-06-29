@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"; 
 import React, { useEffect } from 'react';
 import { useAVToggle, useHMSActions } from '@100mslive/react-sdk';
@@ -14,6 +15,8 @@ import { useParams, useRouter } from 'next/navigation';
 import ToastContext from '~/context/toast-context';
 import Cookies from 'js-cookie';
 import { extractId } from '~/lib/extract-id';
+import useClipboard from '~/hooks/use-copy';
+import { Icons } from './ui/icons';
 
 
 export default function CallFooter () {
@@ -30,6 +33,7 @@ export default function CallFooter () {
   const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
   const params = useParams();
   const roomId = Cookies.get("room-id");
+  const { isCopied, copyToClipboard } = useClipboard();
 
   useEffect(() => {
 
@@ -87,9 +91,20 @@ export default function CallFooter () {
     router.push("/calls")
   }
 
+  async function handleCopy(text: string){
+    await copyToClipboard(text);
+    if(isCopied){
+        addToast({
+            title: 'Copied to clipboard',
+            message: 'The invite link has been copied to your clipboard.',
+            variant: 'default'
+        });
+    }
+}
+
   return (
-    <footer className={`rounded-lg flex items-center mt-auto justify-start px-5 py-8`}>
-      <div className='grid grid-flow-col gap-3'>
+    <footer className={`rounded-lg flex items-center mt-auto justify-center sm:justify-start px-5 py-8`}>
+      <div className='grid grid-cols-5 gap-3'>
         <Button 
           size="sm"
           variant="transparent" 
@@ -125,7 +140,15 @@ export default function CallFooter () {
         <Button 
           size="sm"
           variant="transparent" 
-          onClick={() => void leaveCall()}
+          onClick={()=> handleCopy(window.location.href)}
+          className="rounded-full flex justify-center items-center py-6 px-4 bg-neutral-800"
+        >
+          <Icons.invite color="white" width={20} height={20}/>
+        </Button>
+        <Button 
+          size="sm"
+          variant="transparent" 
+          onClick={() => leaveCall()}
           className="rounded-full flex justify-center py-6 bg-red-500"
         >
           <HangUpIcon color='white' width={25} height={25} />
