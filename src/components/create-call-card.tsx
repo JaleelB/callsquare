@@ -4,7 +4,6 @@ import CardShell, { type CardProps } from './card-shell'
 import ToastContext from "~/context/toast-context";
 import { useRouter } from 'next/navigation'
 import { useCallId } from '~/context/call-id-context';
-import Cookies from 'js-cookie';
 
 
 export default function CreateCallCard (card: CardProps)  {
@@ -24,7 +23,7 @@ export default function CreateCallCard (card: CardProps)  {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          name: callId,
+          callName: callId,
           audio: true,
           video: true,
         }),
@@ -42,7 +41,6 @@ export default function CreateCallCard (card: CardProps)  {
 
       }
       
-      Cookies.set("room-name", callId)
       setIsCallLoading(false);
       router.push(`/call/${callId}`)
 

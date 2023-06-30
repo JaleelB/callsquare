@@ -8,7 +8,6 @@ import Input from './ui/input';
 import CardShell, { type CardProps } from './card-shell';
 import ToastContext from '~/context/toast-context';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 import { joinCallFormSchema } from '~/schemas/call';
 import { type z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -42,7 +41,7 @@ export default function JoinCallDialog (card: CardProps)  {
     async function joinCall(data: FormData) {
 
         setIsJoinCallLoading(true);
-        const callRoom = extractId(data.meetingLink);
+        const callName = extractId(data.meetingLink);
 
         const response = await fetch(`/api/call/join`, {
           method: "POST",
@@ -50,8 +49,8 @@ export default function JoinCallDialog (card: CardProps)  {
             "Content-Type": "application/json",
           },
           body: JSON.stringify({
-            id: callRoom,
-            name: name,
+            callName: callName,
+            username: name,
           }),
         }).catch(error => {
             console.error('Error during fetch:', error);
@@ -67,9 +66,8 @@ export default function JoinCallDialog (card: CardProps)  {
             })
         }
         
-        Cookies.set("room-name", callRoom)
         setIsJoinCallLoading(false);
-        router.push(`/call/${callRoom}`)
+        router.push(`/call/${callName}`)
     }
 
     return (
