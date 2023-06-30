@@ -2,59 +2,53 @@ import { prisma } from "~/server/db";
 import { getServerSession } from "next-auth";
 import { authOptions } from "~/server/auth";
 import { z } from "zod";
+import { env } from "~/env.mjs";
+import { generateManagementToken } from "~/server/management-token";
 
 const leaveCallSchema = z.object({
     callName: z.string().uuid(),
     roomId: z.string().min(8),
+    userName: z.string().min(1).optional(),
 })
 
 interface leaveCallBody {
     callName: string;
     roomId: string
-}
-
-interface Participant {
-    id: string;
-    callName: string;
-    userId: string;
-    name: string;
-    email: string;
-    role: string;
-    status: string;
-    startTime: Date | null;
-    endTime: Date | null;
+    userName?: string;
 }
 
 export async function PATCH(req: Request) {
 
     try{
         const session = await getServerSession(authOptions)
-    
-        if (!session) {
-            return new Response("Unauthorized", { status: 403 })
-        }
-    
-        const { user } = session
-        if (!user || !user.id || !user.name || !user.email ) {
-            throw new Error('You must be logged in to join a call');
-        }   
-
         const json: leaveCallBody = await req.json() as leaveCallBody;
         const body = leaveCallSchema.parse(json)
+        let participant;
 
-        const participant = await prisma.participant.findFirst({
-            where: { 
-                userId: user.id,
-                callName: body.callName,
-            },
-        });
+        if (session) {
+            const { user } = session
+            participant = await prisma.participant.findFirst({
+                where: { 
+                    userId: user.id,
+                    callName: body.callName,
+                },
+            });
+        } else {
+
+            participant = await prisma.participant.findFirst({
+                where: { 
+                    name: body.userName,
+                    callName: body.callName,
+                },
+            });
+        }
           
         if (!participant) {
             throw new Error('Participant not found');
         }
 
         const endTime = new Date();
-        const updatedParticipant: Participant = await prisma.participant.update({
+        const updatedParticipant = await prisma.participant.update({
             where: { 
                 id: participant.id,
             },
@@ -65,24 +59,38 @@ export async function PATCH(req: Request) {
         });
 
         // Check if there are any other participants in the call
-        const otherParticipants: Participant[] = await prisma.participant.findMany({
+        const otherParticipants = await prisma.participant.findMany({
             where: {
                 callName: updatedParticipant.callName,
                 status: 'joined',
             },
         });
 
-        // If there are no other participants, end the call
-        if (otherParticipants.length === 0) {
-            await prisma.call.update({
-                where: { id: body.roomId },
-                data: { 
-                    status: 'ended',
-                    endTime,
-                    duration: endTime.getTime() - (participant?.startTime as Date).getTime() 
-                },
-            });
 
+        if (otherParticipants.length === 1) {
+            //end active call for remaining participant
+            const managementToken = await generateManagementToken();
+            const response = await fetch(`${env.TOKEN_ENDPOINT}/active-rooms/${body.roomId}/end-room`, {
+                method: 'POST',
+                headers: {
+                    'Authorization': `Bearer ${managementToken}`,
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    lock: true
+                })
+            })
+            
+            if(response?.ok){
+                await prisma.call.update({
+                    where: { id: body.roomId },
+                    data: { 
+                        status: 'ended',
+                        endTime,
+                        duration: endTime.getTime() - (participant?.startTime as Date).getTime() 
+                    },
+                });
+            }
         }
       
         return new Response(JSON.stringify(updatedParticipant))
