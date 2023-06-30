@@ -22,6 +22,7 @@ export default function CallPage(){
     const actions = useHMSActions();
     const roomName = Cookies.get("room-name");
     const roomId = Cookies.get("room-id");
+    const unAuthUsername = Cookies.get("username");
     
     useEffect(() => {
 
@@ -32,35 +33,43 @@ export default function CallPage(){
                 return;
             }
 
-            const roomCodeResponse = await fetch(`/api/call/code`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  callName: roomName ? roomName : params.slug,
-                }),
-            })
-
-             // use room code to fetch auth token
-            const codeResponse: RoomCodeResponse = await roomCodeResponse.json() as RoomCodeResponse;
-            const roomCode = codeResponse.code;
-            const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
-            const session = await getSession();
-
             try {
 
-                if(session && session.user.name){
-                    const userName = session.user.name;
-                    await hmsActions.join({ userName, authToken });
+                const roomCodeResponse = await fetch(`/api/call/code`, {
+                    method: "POST",
+                    headers: {
+                      "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify({
+                      callName: roomName ? roomName : params.slug,
+                    }),
+                })
+
+                if(!roomCodeResponse?.ok){
+    
+                 // use room code to fetch auth token
+                    const codeResponse: RoomCodeResponse = await roomCodeResponse.json() as RoomCodeResponse;
+                    const roomCode = codeResponse.code;
+                    const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
+                    const session = await getSession();
+
+                    if(session && session.user.name){
+                        const userName = session.user.name;
+                        await hmsActions.join({ userName, authToken });
+                    } else if(!session && unAuthUsername){
+                        await hmsActions.join({ userName: unAuthUsername, authToken });
+                    }
+                    else {
+                        console.error("Session or user name is not defined");
+                        addToast({
+                            title: "Something went wrong.",
+                            message: "This call cannot joined. Please try again.",
+                            variant: "destructive",
+                        });
+                        router.replace("/calls");
+                    }
                 } else {
-                    console.error("Session or user name is not defined");
-                    addToast({
-                        title: "Something went wrong.",
-                        message: "This call cannot joined. Please try again.",
-                        variant: "destructive",
-                    });
-                    router.push("/calls");
+                    throw new Error("Room code response not OK");
                 }
 
             } catch (error) {
@@ -70,12 +79,12 @@ export default function CallPage(){
                     message: "This call cannot be joined. Please try again.",
                     variant: "destructive",
                 })
-                router.push("/calls");
+                router.replace("/calls");
             }
         }
         void joinCall();
 
-    }, [hmsActions, addToast, params.slug, router, roomName, roomId]);
+    }, [hmsActions, addToast, params.slug, router, roomName, roomId, unAuthUsername]);
 
     useEffect(() => {
         window.onunload = () => {
@@ -102,7 +111,6 @@ export default function CallPage(){
                     } 
                     
                     await actions.leave();
-                    // router.push("/calls")
                 }
 
                 void leaveCall();

@@ -13,9 +13,9 @@ export default async function CallLayout({
 }) {
 
   const user = await getCurrentUser();
-  const roomName = cookies().get("room-name")?.value;
+  const unAuthorizedUserName = cookies().get("username");
 
-  if (!user  || !roomName) {
+  if (!user && !unAuthorizedUserName) {
     redirect(`/preview/${params.slug}`)
   }
 

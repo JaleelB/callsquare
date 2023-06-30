@@ -1,7 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client";
 import { MicOnIcon, MicOffIcon, VideoOnIcon, VideoOffIcon } from "@100mslive/react-icons";
-import { useHMSActions } from "@100mslive/react-sdk";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
@@ -9,12 +8,11 @@ import { type z } from "zod";
 import Button from "~/components/ui/button";
 import Input from "~/components/ui/input";
 import { joinSchema } from "~/schemas/join";
-import { type RoomCodeResponse } from "~/types/room";
 import { useParams, useRouter } from "next/navigation";
 import Video from "~/components/ui/video";
-import Cookies from "js-cookie";
 import React from "react";
 import ToastContext from "~/context/toast-context";
+import Cookies from "js-cookie";
 
 type FormData = z.infer<typeof joinSchema> 
 
@@ -22,8 +20,6 @@ export default function CallPreviewPage(){
 
     const [audio, setAudio] = useState(false);
     const [video, setVideo] = useState(false);
-    const [name, setName] = useState("User");
-    const [authToken, setAuthToken] = useState("");
     const router = useRouter();
     const { 
         register, 
@@ -33,45 +29,9 @@ export default function CallPreviewPage(){
         resolver: zodResolver(joinSchema)
     });
     const params = useParams();
-    const hmsActions = useHMSActions();
     const videoRef = useRef<HTMLVideoElement>(null);
     const { addToast } = React.useContext(ToastContext);
     
-    useEffect(() => {
-
-        async function startPreview(){
- 
-            const roomCodeResponse = await fetch(`/api/call/code`, {
-                method: "POST",
-                headers: {
-                  "Content-Type": "application/json",
-                },
-                body: JSON.stringify({
-                  callName: params.slug,
-                }),
-            })
-
-             // use room code to fetch auth token
-            const codeResponse: RoomCodeResponse = await roomCodeResponse.json() as RoomCodeResponse;
-            const roomCode = codeResponse.code;
-            const authToken = await hmsActions.getAuthTokenByRoomCode({ roomCode })
-            setAuthToken(authToken);
-
-            await hmsActions.preview({
-                userName: name,
-                authToken: authToken, 
-                settings: {
-                    isAudioMuted: !audio,
-                    isVideoMuted: !video,
-                },
-                rememberDeviceSelection: true,  
-            });
-        
-        }
-        void startPreview();
-
-    }, [audio, hmsActions, video, name, params.slug]);
-
 
     useEffect(() => {
         // Request the user's media stream
@@ -100,44 +60,38 @@ export default function CallPreviewPage(){
 
     
     async function joinCall(data: FormData){
+        try {
+    
+            const joinResponse = await fetch(`/api/call/join`, {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    callName: params.slug,
+                    username: data.name,
+                }),
+            });
+    
 
-        const response = await fetch(`/api/preview/join`, {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              callName: params.slug,
-              username: data.name,
-            }),
-        }).catch(error => {
+            if (!joinResponse.ok) {
+                throw new Error('Join response not OK');
+            }
+    
+            Cookies.set("username", data.name);
+            router.replace(`/call/${params.slug as string}`);
+
+        } catch (error) {
             console.error('Error during fetch:', error);
-        });
-        
-          
-        if (!response?.ok) {
-            return addToast({
+            addToast({
                 title: "Something went wrong.",
                 message: "This call cannot be joined. Please try again.",
                 variant: "destructive",
-            })
+            });
         }
-
-        Cookies.set("room-name", params.slug as string)
-
-        await hmsActions.join({
-            userName: data.name,
-            authToken: authToken, 
-            settings: {
-                isAudioMuted: !audio,
-                isVideoMuted: !video,
-            },
-            rememberDeviceSelection: true,  
-        });
         
-        router.replace(`/call/${params.slug as string}`);
     }
-
+    
 
     return(
         <section className="w-full h-full flex justify-center items-center p-4">
@@ -186,7 +140,6 @@ export default function CallPreviewPage(){
                                 {...register('name')}
                                 placeholder="Enter your name"
                                 type="text"
-                                onChange={(e) => setName(e.target.value)}
                             />
                             {errors.name && typeof errors.name.message === 'string' && <p className='mt-2 text-sm text-red-500'>{errors.name.message}</p>}
                             <Button 
