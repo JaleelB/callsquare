@@ -5,15 +5,15 @@ import { authOptions } from "~/server/auth"
 import { prisma } from "~/server/db"
 
 const joinCallSchema = z.object({
-    name: z.string().optional(),
-    id: z.string().uuid(),
+    username: z.string().optional(),
+    callName: z.string().uuid(),
     audio: z.boolean().optional(),
     video: z.boolean().optional(),
 })
 
 interface JoinCallBody {
-    id: string;
-    name?: string;
+    callName: string;
+    username?: string;
     audio?: boolean;
     video?: boolean;
 }
@@ -23,37 +23,41 @@ export async function POST(req: Request) {
     try {
         const session = await getServerSession(authOptions)
     
-        if (!session) {
-            return new Response("Unauthorized", { status: 403 })
+        let userId, userName, userEmail;
+        if (session) {
+            const { user } = session
+            if (user && user.id && user.name && user.email) {
+                userId = user.id;
+                userName = user.name;
+                userEmail = user.email;
+            }
         }
-    
-        const { user } = session
-        if (!user || !user.id || !user.name || !user.email ) {
-            throw new Error('You must be logged in to join a call');
-        }   
 
         const json: JoinCallBody = await req.json() as JoinCallBody;
         const body = joinCallSchema.parse(json)
 
         const call = await prisma.call.findFirst({
-            where: { status: 'created', name: body.id },
+            where: { status: 'created', name: body.callName },
         });
       
         if (!call || call.status === 'ended') {
             return new Response("Not Found", { status: 404 })
         }
     
-        let participant = await prisma.participant.findUnique({
-            where: { id: user.id },
-        });
+        let participant;
+        if (userId) {
+            participant = await prisma.participant.findUnique({
+                where: { id: userId },
+            });
+        }
         
         if (!participant) {
             participant = await prisma.participant.create({
                 data: {
                     callName: call.name,
-                    userId: user.id,
-                    email: user.email,
-                    name: body.name ? body.name : user.name,
+                    userId: userId || null,
+                    email: userEmail || null,
+                    name: body.username || userName || "Guest",
                     role: "guest",
                     status: 'joined',
                     callId: call.id,
@@ -62,14 +66,13 @@ export async function POST(req: Request) {
             });
         } else {
             participant = await prisma.participant.update({
-                where: { id: user.id },
+                where: { id: userId },
                 data: { 
                     callName: call.name,
                     status: 'joined',
                     startTime: new Date()
                 },
             });
-            
         }
 
         cookies().set('room-id', call.id)
@@ -81,4 +84,4 @@ export async function POST(req: Request) {
         return new Response(null, { status: 500 })
     }
 
-  }
+}
