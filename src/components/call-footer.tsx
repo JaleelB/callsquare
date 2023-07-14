@@ -10,13 +10,13 @@ import {
   HangUpIcon,
   ShareScreenIcon,
 } from '@100mslive/react-icons';
-import Button from './ui/button';
 import { useParams, useRouter } from 'next/navigation';
-import ToastContext from '~/context/toast-context';
 import Cookies from 'js-cookie';
 import { extractId } from '~/lib/extract-id';
 import useClipboard from '~/hooks/use-copy';
 import { Icons } from './ui/icons';
+import { Button } from './ui/button';
+import { useToast } from './ui/use-toast';
 
 
 export default function CallFooter () {
@@ -29,7 +29,7 @@ export default function CallFooter () {
   } = useAVToggle();
   const actions = useHMSActions();
   const router = useRouter();
-  const { addToast } = React.useContext(ToastContext);
+  const { toast } = useToast()
   const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
   const params = useParams();
   const roomId = Cookies.get("room-id");
@@ -42,9 +42,9 @@ export default function CallFooter () {
         try {
           await actions.setScreenShareEnabled(true);
         } catch (error) {
-          return addToast({
+          return toast({
             title: "Something went wrong.",
-            message: "Your screen cannot be shared. Please try again.",
+            description: "Your screen cannot be shared. Please try again.",
             variant: "destructive",
           })
         }
@@ -52,9 +52,9 @@ export default function CallFooter () {
         try {
           await actions.setScreenShareEnabled(false);
         } catch (error) {
-          return addToast({
+          return toast({
             title: "Something went wrong.",
-            message: "There is an issue disabling screen share. Please try again.",
+            description: "There is an issue disabling screen share. Please try again.",
             variant: "destructive",
           })
         }
@@ -63,7 +63,7 @@ export default function CallFooter () {
 
     void enableScreenShare();
     
-  }, [actions, addToast, isScreenShareEnabled])
+  }, [actions, isScreenShareEnabled, toast])
 
   async function leaveCall() {
     const roomName = Cookies.get("room-name");
@@ -80,9 +80,9 @@ export default function CallFooter () {
     })
 
     if(!response.ok){
-      addToast({
+      toast({
         title: "Something went wrong.",
-        message: "Your call cannot be left. Please try again.",
+        description: "Your call cannot be left. Please try again.",
         variant: "destructive",
       })
     } 
@@ -94,9 +94,9 @@ export default function CallFooter () {
   async function handleCopy(text: string){
     await copyToClipboard(text);
     if(isCopied){
-        addToast({
+        toast({
             title: 'Copied to clipboard',
-            message: 'The invite link has been copied to your clipboard.',
+            description: 'The invite link has been copied to your clipboard.',
             variant: 'default'
         });
     }
@@ -107,7 +107,7 @@ export default function CallFooter () {
       <div className='grid grid-cols-5 gap-3'>
         <Button 
           size="sm"
-          variant="transparent" 
+          variant="ghost" 
           onClick={toggleAudio}
           className="rounded-full flex justify-center items-center bg-neutral-800 py-6 px-4"
         >
@@ -119,7 +119,7 @@ export default function CallFooter () {
         </Button>
         <Button 
           size="sm"
-          variant="transparent" 
+          variant="ghost" 
           onClick={toggleVideo}
           className="rounded-full flex justify-center items-center py-6 px-4 bg-neutral-800"
         >
@@ -131,7 +131,7 @@ export default function CallFooter () {
         </Button>
         <Button 
           size="sm"
-          variant="transparent" 
+          variant="ghost" 
           onClick={()=> setIsScreenShareEnabled(!isScreenShareEnabled)}
           className="rounded-full flex justify-center items-center py-6 px-4 bg-neutral-800"
         >
@@ -139,7 +139,7 @@ export default function CallFooter () {
         </Button>
         <Button 
           size="sm"
-          variant="transparent" 
+          variant="ghost" 
           onClick={()=> handleCopy(window.location.href)}
           className="rounded-full flex justify-center items-center py-6 px-4 bg-neutral-800"
         >
@@ -147,7 +147,7 @@ export default function CallFooter () {
         </Button>
         <Button 
           size="sm"
-          variant="transparent" 
+          variant="ghost" 
           onClick={() => leaveCall()}
           className="rounded-full flex justify-center py-6 bg-red-500"
         >

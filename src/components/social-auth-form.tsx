@@ -2,9 +2,9 @@
 import * as React from "react";
 import { signIn } from "next-auth/react";
 import { Icons } from './ui/icons';
-import ToastContext from "~/context/toast-context";
-import Button from "./ui/button";
 import { useSearchParams } from "next/navigation";
+import { Button } from "./ui/button";
+import { useToast } from "./ui/use-toast";
 
 const socialProviders = [
   { name: "github", color: "#FFF", icon: Icons.github },
@@ -14,7 +14,7 @@ const socialProviders = [
 
 export default function SocialAuthForm () {
   const [isSocialLoading, setIsSocialLoading] = React.useState<{ [key: string]: boolean }>({});
-  const { addToast } = React.useContext(ToastContext);
+  const { toast } = useToast()
   const searchParams = useSearchParams()
 
   const handleSocialSignIn = (provider: string) => {
@@ -29,10 +29,10 @@ export default function SocialAuthForm () {
       })
       .catch((error) => {
         console.error(`Error during ${provider} sign-in:`, error);
-        addToast({
+        toast({
           title: "Something went wrong!",
           variant: "destructive",
-          message: `Error during ${provider} sign-in.`,
+          description: `Error during ${provider} sign-in.`,
         });
       })
       .finally(() => {
@@ -49,7 +49,8 @@ export default function SocialAuthForm () {
         <Button 
           key={provider.name}
           size="lg"
-          variant={provider.name === "github" ? "default" : "outlined"}
+          className="font-normal"
+          variant={provider.name === "github" ? "default" : "outline"}
           onClick={() => handleSocialSignIn(provider.name)}
           disabled={isSocialLoading[provider.name]}
         >

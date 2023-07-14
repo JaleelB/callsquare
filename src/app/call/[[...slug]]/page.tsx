@@ -5,11 +5,11 @@ import React from "react";
 import { useEffect } from "react";
 import CallFooter from "~/components/call-footer";
 import Conference from "~/components/conference";
-import ToastContext from "~/context/toast-context";
 import { useParams, useRouter } from "next/navigation";
 import { getSession } from "next-auth/react";
 import { type RoomCodeResponse } from "~/types/room";
 import { extractId } from "~/lib/extract-id";
+import { useToast } from "~/components/ui/use-toast";
 
 
 export default function CallPage(){
@@ -18,7 +18,7 @@ export default function CallPage(){
     const router = useRouter()
     const isConnected = useHMSStore(selectIsConnectedToRoom);
     const hmsActions = useHMSActions();
-    const { addToast } = React.useContext(ToastContext);
+    const { toast } = useToast()
     const actions = useHMSActions();
     const roomName = Cookies.get("room-name");
     const roomId = Cookies.get("room-id");
@@ -61,9 +61,9 @@ export default function CallPage(){
                     }
                     else {
                         console.error("Session or user name is not defined");
-                        addToast({
+                        toast({
                             title: "Something went wrong.",
-                            message: "This call cannot joined. Please try again.",
+                            description: "This call cannot joined. Please try again.",
                             variant: "destructive",
                         });
                         router.replace("/calls");
@@ -74,9 +74,9 @@ export default function CallPage(){
 
             } catch (error) {
                 console.error(error)
-                addToast({
+                toast({
                     title: "Something went wrong.",
-                    message: "This call cannot be joined. Please try again.",
+                    description: "This call cannot be joined. Please try again.",
                     variant: "destructive",
                 })
                 router.replace("/calls");
@@ -84,7 +84,7 @@ export default function CallPage(){
         }
         void joinCall();
 
-    }, [hmsActions, addToast, params.slug, router, roomName, roomId, unAuthUsername]);
+    }, [hmsActions, toast, params.slug, router, roomName, roomId, unAuthUsername]);
 
     useEffect(() => {
         window.onunload = () => {
@@ -103,9 +103,9 @@ export default function CallPage(){
                     })
                 
                     if(response.ok){
-                      return addToast({
+                      return toast({
                         title: "Something went wrong.",
-                        message: "Your call cannot be left. Please try again.",
+                        description: "Your call cannot be left. Please try again.",
                         variant: "destructive",
                       })
                     } 
@@ -117,7 +117,7 @@ export default function CallPage(){
             }
         };
 
-    }, [actions, addToast, hmsActions, isConnected, params.slug, roomId, roomName, router]);
+    }, [actions, toast, hmsActions, isConnected, params.slug, roomId, roomName, router]);
 
 
     return(
@@ -125,6 +125,5 @@ export default function CallPage(){
             <Conference/>
             <CallFooter/>
         </section>
-
     )
 }

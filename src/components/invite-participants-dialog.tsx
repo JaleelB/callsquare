@@ -1,26 +1,27 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React, { useState } from 'react'
-import Button from './ui/button'
-import { Dialog, DialogHeader, DialogContent } from './ui/dialog';
-import Input from './ui/input';
 import { Icons } from './ui/icons';
 import CardShell, { type CardProps } from './card-shell';
 import { useForm } from 'react-hook-form';
 import { inviteSchema } from '~/schemas/invite';
 import { env } from '~/env.mjs';
 import { zodResolver } from "@hookform/resolvers/zod";
-import ToastContext from "~/context/toast-context";
 import { type z } from 'zod';
 import { getSession } from 'next-auth/react';
 import { useCallId } from '~/context/call-id-context';
 import useClipboard from '~/hooks/use-copy';
+import { Button } from './ui/button';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import { DialogDescription } from '@radix-ui/react-dialog';
+import { useToast } from './ui/use-toast';
+import { Input } from './ui/input';
+import { Label } from './ui/label';
 
 type FormData = z.infer<typeof inviteSchema>
 
 export default function InviteParticipantsDialog (card: CardProps)  {
 
-    const [showInviteDialog, setShowInviteDialog] = useState(false);
     const [isLoading, setIsLoading] = useState(false);
     const { 
         register, 
@@ -29,7 +30,7 @@ export default function InviteParticipantsDialog (card: CardProps)  {
     } = useForm<FormData>({
         resolver: zodResolver(inviteSchema)
     });
-    const { addToast } = React.useContext(ToastContext);
+    const { toast } = useToast()
     const { callId } = useCallId();
     const { isCopied, copyToClipboard } = useClipboard();
     
@@ -63,17 +64,17 @@ export default function InviteParticipantsDialog (card: CardProps)  {
             }
       
             setIsLoading(false);
-            return addToast({
+            return toast({
                 title: 'Invite sent',
-                message: 'Your invite has been sent successfully',
+                description: 'Your invite has been sent successfully',
                 variant: 'default'
             });
 
           } catch (error) {
             setIsLoading(false);
-            return addToast({
+            return toast({
               title: 'Error sending invite',
-              message: 'There was an error sending your invite. Please try again later.',
+              description: 'There was an error sending your invite. Please try again later.',
               variant: 'destructive'
             });
           }
@@ -84,73 +85,77 @@ export default function InviteParticipantsDialog (card: CardProps)  {
 
         await copyToClipboard(text);
         if(isCopied){
-            addToast({
+            toast({
                 title: 'Copied to clipboard',
-                message: 'The invite link has been copied to your clipboard.',
+                description: 'The invite link has been copied to your clipboard.',
                 variant: 'default'
             });
         }
     }
       
 
-
     return (
-        <div>
-            <CardShell card={card} func={() => setShowInviteDialog(true)}/>
-            <Dialog open={showInviteDialog}>
-                <div className='flex items-center justify-between mb-8'>
-                    <DialogHeader>Invite participants</DialogHeader>
-                    <div 
-                        className='w-6 h-6 cursor-pointer grid place-items-center' 
-                        onClick={() => setShowInviteDialog(false)}
-                    >
-                        <Icons.close 
-                            className='w-5 h-5' 
-                            color="#0F172A"
-                        />
-                    </div>
-                </div>
-                <DialogContent>
-                    <form onSubmit={handleSubmit(onSubmit)}>
-                        <div className='flex flex-col md:flex-row justify-between items-end'>
+        <Dialog>
+            <DialogTrigger asChild>
+                <Button variant="ghost" className='p-0 flex w-fit h-fit'>
+                    <CardShell card={card}/>
+                </Button>
+            </DialogTrigger>
+            <DialogContent>
+                <DialogHeader className='mb-4'>
+                    <DialogTitle className='text-xl'>Invite participants</DialogTitle>
+                    <DialogDescription className='text-sm text-muted-foreground'>
+                        Copy the link below and invite participants to this call.
+                    </DialogDescription>
+                </DialogHeader>
+                <form onSubmit={handleSubmit(onSubmit)}>
+                    <div className='flex flex-col md:flex-row justify-between items-end'>
+                        <div className='w-full space-y-1'>
+                            <Label htmlFor="email">Email</Label>
                             <Input 
                                 {...register('email')}
                                 type="email" 
+                                id="email"
                                 placeholder="Email address"
-                                label="Email"
+                                className='w-full'
                             />
-                            <Button 
-                                type="submit"
-                                className='rounded-md mt-2 md:mt-0 md:ml-2 w-full md:w-fit whitespace-nowrap'
-                                size='lg'
-                            >
-                                {isLoading && <Icons.spinner width="16" height="16" className='mr-3' color="#fff"/>}
-                                Send invite
-                            </Button>
                         </div>
-                        {errors.email && typeof errors.email.message === 'string' && <p className='mt-2 text-sm text-red-500'>{errors.email.message}</p>}
-                    </form>
-                    
-                    <div className='bg-slate-200 w-full h-[1px] my-8'></div>
-                    <div className='flex flex-col md:flex-row justify-between items-end mb-2'>
-                        <Input 
-                            disabled 
-                            placeholder={`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`} 
-                            required
-                            label="Copy invite link"
-                        />
+                        <Button 
+                            type="submit"
+                            className='rounded-md font-normal mt-2 md:mt-0 md:ml-2 w-full md:w-fit whitespace-nowrap'
+                            size='lg'
+                        >
+                            {isLoading && <Icons.spinner width="16" height="16" className='mr-3' color="#fff"/>}
+                            Send invite
+                        </Button>
+                    </div>
+                    {errors.email && typeof errors.email.message === 'string' && <p className='mt-2 text-sm text-red-500'>{errors.email.message}</p>}
+                </form>
+                <div className='bg-slate-200 w-full h-[1px] my-4'></div>
+                <DialogFooter className='w-full'>
+                    <div className='w-full flex flex-col md:flex-row justify-between items-end mb-2'>
+                        <div className='w-full space-y-1'>
+                            <Label htmlFor="link">Link</Label>
+                            <Input 
+                                disabled 
+                                placeholder={`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`} 
+                                required
+                                id="link"
+                                className='w-full'
+                            />
+                        </div>
                         <Button 
                             variant='secondary' 
                             size='lg'
-                            className="rounded-md flex mt-2 md:mt-0 md:ml-2 ml-auto w-full md:w-fit"
+                            className="rounded-md font-normal flex mt-2 md:mt-0 md:ml-2 ml-auto w-full md:w-fit"
                             onClick={() => handleCopy(`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`)}
                         >
                             Copy
                         </Button>
                     </div>
-                </DialogContent>
-            </Dialog>
-        </div>
+                </DialogFooter>
+            </DialogContent>
+        </Dialog>
     )
 }
 
