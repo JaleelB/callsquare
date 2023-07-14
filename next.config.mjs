@@ -19,7 +19,7 @@ const config = {
   //   defaultLocale: "en",
   // },
   images: {
-    domains: ['avatars.githubusercontent.com', 'lh3.googleusercontent.com'],
+    domains: ["avatars.githubusercontent.com", "lh3.googleusercontent.com", "images.pexels.com"],
   },
   experimental: {
     serverActions: true,
