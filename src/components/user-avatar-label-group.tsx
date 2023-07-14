@@ -1,5 +1,5 @@
 import React from 'react';
-import UserAvatar from './old-ui/user-avatar';
+import UserAvatar from './user-avatar';
 
 interface User {
   name: string;
@@ -16,8 +16,8 @@ export default function UserAvatarLabelGroup({ user }: UserAvatarLabelGroupProps
     <div className="flex items-center">
       <UserAvatar image={user.image} />
       <div className="hidden sm:block ml-3 text-left">
-        <div className="text-sm font-semibold text-slate-900">{user.name}</div>
-        <div className="text-xs text-slate-600">{user.email}</div>
+        <div className="text-sm font-semibold">{user.name}</div>
+        <div className="text-xs text-muted-foreground">{user.email}</div>
       </div>
     </div>
   );

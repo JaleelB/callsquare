@@ -42,7 +42,7 @@ interface NavigationItem {
             <div className='
                   w-full mx-auto max-w-[1400px] text-neutral-700
                   flex flex-col sm:flex-row justify-between md:items-center
-                  font-normal
+                  font-normal gap-4 sm:gap-0
                 '
             >
                 <p className="flex md:justify-center text-xs leading-5 text-neutral-500">

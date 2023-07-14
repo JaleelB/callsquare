@@ -5,14 +5,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
-import Button from "~/components/old-ui/button";
-import Input from "~/components/old-ui/input";
 import { joinSchema } from "~/schemas/join";
 import { useParams, useRouter } from "next/navigation";
-import Video from "~/components/old-ui/video";
+import Video from "~/components/ui/video";
 import React from "react";
-import ToastContext from "~/context/toast-context";
 import Cookies from "js-cookie";
+import { Button } from "~/components/ui/button";
+import { Input } from "~/components/ui/input";
+import { useToast } from "~/components/ui/use-toast";
 
 type FormData = z.infer<typeof joinSchema> 
 
@@ -30,7 +30,7 @@ export default function CallPreviewPage(){
     });
     const params = useParams();
     const videoRef = useRef<HTMLVideoElement>(null);
-    const { addToast } = React.useContext(ToastContext);
+    const { toast } = useToast()
     
 
     useEffect(() => {
@@ -83,9 +83,9 @@ export default function CallPreviewPage(){
 
         } catch (error) {
             console.error('Error during fetch:', error);
-            addToast({
+            toast({
                 title: "Something went wrong.",
-                message: "This call cannot be joined. Please try again.",
+                description: "This call cannot be joined. Please try again.",
                 variant: "destructive",
             });
         }
@@ -105,7 +105,7 @@ export default function CallPreviewPage(){
                     <div className="absolute w-full flex justify-start items-center gap-2 bottom-4 pl-4">
                         <Button 
                             size="sm"
-                            variant="transparent" 
+                            variant="ghost" 
                             onClick={() => setAudio(!audio)}
                             className="rounded-full flex justify-center items-center border border-white py-6 px-4"
                         >
@@ -117,7 +117,7 @@ export default function CallPreviewPage(){
                         </Button>
                         <Button 
                             size="sm"
-                            variant="transparent" 
+                            variant="ghost" 
                             onClick={() => setVideo(!video)}
                             className="rounded-full flex justify-center items-center py-6 px-4 border border-white"
                         >

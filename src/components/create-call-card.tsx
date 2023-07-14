@@ -1,14 +1,14 @@
 "use client"
 import React, { useState } from 'react'
 import CardShell, { type CardProps } from './card-shell'
-import ToastContext from "~/context/toast-context";
 import { useRouter } from 'next/navigation'
 import { useCallId } from '~/context/call-id-context';
+import { useToast } from './ui/use-toast';
 
 
 export default function CreateCallCard (card: CardProps)  {
     
-    const { addToast } = React.useContext(ToastContext);
+    const { toast } = useToast()
     const router = useRouter()
     const { callId } = useCallId();
     const [isCallLoading, setIsCallLoading] = useState(false);
@@ -33,9 +33,9 @@ export default function CreateCallCard (card: CardProps)  {
 
         setIsCallLoading(false);
 
-        return addToast({
+        return toast({
             title: "Something went wrong.",
-            message: "Your call cannot be created. Please try again.",
+            description: "Your call cannot be created. Please try again.",
             variant: "destructive",
         })
 
