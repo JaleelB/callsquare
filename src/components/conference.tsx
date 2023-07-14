@@ -1,7 +1,7 @@
 "use client";
 import { selectPeers, useHMSStore } from "@100mslive/react-sdk";
 import React from "react";
-import Peer from "./ui/peer";
+import Peer from "./old-ui/peer";
 
 export default function Conference() {
     const peers = useHMSStore(selectPeers);

@@ -10,13 +10,13 @@ import {
   HangUpIcon,
   ShareScreenIcon,
 } from '@100mslive/react-icons';
-import Button from './ui/button';
+import Button from './old-ui/button';
 import { useParams, useRouter } from 'next/navigation';
 import ToastContext from '~/context/toast-context';
 import Cookies from 'js-cookie';
 import { extractId } from '~/lib/extract-id';
 import useClipboard from '~/hooks/use-copy';
-import { Icons } from './ui/icons';
+import { Icons } from './old-ui/icons';
 
 
 export default function CallFooter () {

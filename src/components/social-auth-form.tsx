@@ -1,9 +1,9 @@
 "use client"
 import * as React from "react";
 import { signIn } from "next-auth/react";
-import { Icons } from './ui/icons';
+import { Icons } from './old-ui/icons';
 import ToastContext from "~/context/toast-context";
-import Button from "./ui/button";
+import Button from "./old-ui/button";
 import { useSearchParams } from "next/navigation";
 
 const socialProviders = [

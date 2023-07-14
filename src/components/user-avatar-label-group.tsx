@@ -1,5 +1,5 @@
 import React from 'react';
-import UserAvatar from './ui/user-avatar';
+import UserAvatar from './old-ui/user-avatar';
 
 interface User {
   name: string;

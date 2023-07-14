@@ -1,6 +1,6 @@
 import { type Metadata } from "next"
 import Link from "next/link"
-import { Icons } from "~/components/ui/icons"
+import { Icons } from "~/components/old-ui/icons"
 import SocialAuthForm from "~/components/social-auth-form"
 
 export const metadata: Metadata = {

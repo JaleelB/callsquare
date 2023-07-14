@@ -1,6 +1,6 @@
 "use client"
 import React, { type ReactNode, useEffect, useState } from 'react';
-import Toast from './ui/toast';
+import Toast from './old-ui/toast';
 import ToastContext, { type ToastValues, type ToastVariant } from '../context/toast-context';
 
 interface ToastData {

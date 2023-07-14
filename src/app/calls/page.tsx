@@ -1,8 +1,8 @@
 import { type Metadata } from "next";
 import Link from "next/link";
-import Badge from "~/components/ui/badge";
-import Button from "~/components/ui/button";
-import { Icons } from "~/components/ui/icons";
+import Badge from "~/components/old-ui/badge";
+import Button from "~/components/old-ui/button";
+import { Icons } from "~/components/old-ui/icons";
 import { formatDate } from "~/lib/date";
 import { getCurrentUser } from "~/lib/session";
 import JoinCallDialog from "~/components/join-call-dialog";

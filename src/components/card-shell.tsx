@@ -1,7 +1,7 @@
 "use client"
 import React, { type ReactNode } from 'react'
-import Button from './ui/button';
-import { CardContainer, CardHeader, CardContent, CardTitle, CardDescription } from './ui/card';
+import Button from './old-ui/button';
+import { CardContainer, CardHeader, CardContent, CardTitle, CardDescription } from './old-ui/card';
 
 export interface CardProps {
     title: string;

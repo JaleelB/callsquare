@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React, { useState } from 'react'
-import Button from './ui/button'
-import { Dialog, DialogHeader, DialogContent } from './ui/dialog';
-import Input from './ui/input';
-import { Icons } from './ui/icons';
+import Button from './old-ui/button'
+import { Dialog, DialogHeader, DialogContent } from './old-ui/dialog';
+import Input from './old-ui/input';
+import { Icons } from './old-ui/icons';
 import CardShell, { type CardProps } from './card-shell';
 import { useForm } from 'react-hook-form';
 import { inviteSchema } from '~/schemas/invite';

@@ -1,10 +1,10 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React, { useState } from 'react'
-import Button from './ui/button'
-import Checkbox from './ui/checkbox';
-import { Dialog, DialogHeader, DialogContent, DialogFooter } from './ui/dialog';
-import Input from './ui/input';
+import Button from './old-ui/button'
+import Checkbox from './old-ui/checkbox';
+import { Dialog, DialogHeader, DialogContent, DialogFooter } from './old-ui/dialog';
+import Input from './old-ui/input';
 import CardShell, { type CardProps } from './card-shell';
 import ToastContext from '~/context/toast-context';
 import { useRouter } from 'next/navigation';
@@ -13,7 +13,7 @@ import { type z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { extractId } from '~/lib/extract-id';
-import { Icons } from './ui/icons';
+import { Icons } from './old-ui/icons';
 
 
 type FormData = z.infer<typeof joinCallFormSchema>

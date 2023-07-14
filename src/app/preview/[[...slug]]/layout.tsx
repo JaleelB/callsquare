@@ -1,7 +1,7 @@
 import Link from "next/link";
 import FullNav from "~/components/full-nav";
-import Button from "~/components/ui/button";
-import { Icons } from "~/components/ui/icons";
+import Button from "~/components/old-ui/button";
+import { Icons } from "~/components/old-ui/icons";
 
 export default function CallPreviewLayout({
     children,

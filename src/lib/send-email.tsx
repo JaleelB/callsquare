@@ -1,6 +1,6 @@
 import { render } from '@react-email/render';
 import nodemailer from 'nodemailer';
-import InviteEmail  from '../components/ui/email';
+import InviteEmail  from '../components/old-ui/email';
 import { env } from '~/env.mjs';
 
 export type EmailProps = {

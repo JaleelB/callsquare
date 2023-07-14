@@ -125,6 +125,5 @@ export default function CallPage(){
             <Conference/>
             <CallFooter/>
         </section>
-
     )
 }

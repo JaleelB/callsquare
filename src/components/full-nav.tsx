@@ -1,6 +1,6 @@
 import Link from 'next/link';
 import React from 'react'
-import { Icons } from './ui/icons';
+import { Icons } from './old-ui/icons';
 import { getCurrentUser } from '~/lib/session';
 
 export default async function FullNav({children}: {children: React.ReactNode}) {
