@@ -19,6 +19,7 @@ export default async function CallsHomeLayout({
 
   return (
     <div className="flex min-h-screen flex-col">
+      {/* @ts-expect-error Server Component */}
       <FullNav>
         <UserAccountDropdown 
           user={{ 

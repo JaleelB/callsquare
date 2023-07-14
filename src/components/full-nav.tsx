@@ -3,7 +3,9 @@ import React from 'react'
 import { Icons } from './ui/icons';
 import { getCurrentUser } from '~/lib/session';
 
-export default async function FullNav({children}: {children: React.ReactNode}) {
+export default async function FullNav({children}: {
+  children: React.ReactNode}
+): Promise<React.JSX.Element> {
 
   const user = await getCurrentUser()
 

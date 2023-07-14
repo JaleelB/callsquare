@@ -10,6 +10,7 @@ export default function HomePageLayout({
 }) {
   return (
     <div className="flex min-h-screen flex-col">
+        {/* @ts-expect-error Server Component */}
         <FullNav>
           <div className='hidden sm:flex'>
             <Button className="mr-2 rounded-md font-normal" variant='ghost'>

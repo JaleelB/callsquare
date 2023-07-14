@@ -12,6 +12,7 @@ export default function CallPreviewLayout({
   return (
     <div>
       <div className="absolute">
+        {/* @ts-expect-error Server Component */}
         <FullNav>
             <Button className="rounded-md">
               <Link href={'/'} className="flex items-center">
