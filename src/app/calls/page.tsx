@@ -52,7 +52,7 @@ export default async function CallsPage(){
                 <div className="flex flex-col items-center gap-4 text-center">
                     <div>
                         <Badge date={formatDate(new Date())}/>
-                        <h1 className="mt-4 text-4xl text-slate-900 md:text-5xl lg:text-6xl font-bold leading-none px-4 md:px-8">
+                        <h1 className="mt-4 text-4xl text-slate-900 md:text-5xl lg:text-[50px] font-semibold leading-none px-4 md:px-8">
                             {`Welcome ${user?.name as string}`}
                         </h1>
                     </div>
