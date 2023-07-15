@@ -102,12 +102,12 @@ export default function CallPage(){
                       }),
                     })
                 
-                    if(response.ok){
-                      return toast({
-                        title: "Something went wrong.",
-                        description: "Your call cannot be left. Please try again.",
-                        variant: "destructive",
-                      })
+                    if(!response.ok){
+                        toast({
+                            title: "Something went wrong.",
+                            description: "Your call cannot be left. Please try again.",
+                            variant: "destructive",
+                        })
                     } 
                     
                     await actions.leave();
