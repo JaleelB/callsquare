@@ -45,7 +45,7 @@ export default function CallPage(){
                     }),
                 })
 
-                if(!roomCodeResponse?.ok){
+                if(roomCodeResponse?.ok){
     
                  // use room code to fetch auth token
                     const codeResponse: RoomCodeResponse = await roomCodeResponse.json() as RoomCodeResponse;
