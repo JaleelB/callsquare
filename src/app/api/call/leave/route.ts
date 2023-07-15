@@ -67,8 +67,8 @@ export async function PATCH(req: Request) {
         });
 
 
-        if (otherParticipants.length === 1) {
-            //end active call for remaining participant
+        if (otherParticipants.length <= 1) {
+            
             const managementToken = await generateManagementToken();
             const response = await fetch(`${env.TOKEN_ENDPOINT}/active-rooms/${body.roomId}/end-room`, {
                 method: 'POST',
