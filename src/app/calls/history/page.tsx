@@ -25,7 +25,7 @@ export default async function HistoryPage(){
     });
     
     return (
-        <div className="container max-w-[1400px] mb-8 mx-auto">
+        <div className="container max-w-[1400px] mb-12 mx-auto">
             <h1 className="text-2xl text-slate-900 md:text-[30px] font-semibold leading-tight mb-1">Call history</h1>
             <p className="text-muted-foreground mb-8">Review your past interactions and revisit meaningful moments</p>
     

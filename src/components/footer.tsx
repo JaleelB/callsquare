@@ -38,9 +38,9 @@ interface NavigationItem {
     const year = d.getFullYear();
 
     return (
-        <footer className='px-4 md:px-8 pb-8 pt-8 w-screen mt-auto bottom-0'>
+        <footer className='pb-8 pt-8 w-screen mt-auto bottom-0'>
             <div className='
-                  w-full mx-auto max-w-[1400px] text-neutral-700
+                  container mx-auto max-w-[1400px] text-neutral-700
                   flex flex-col sm:flex-row justify-between md:items-center
                   font-normal gap-4 sm:gap-0
                 '

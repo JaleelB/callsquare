@@ -21,13 +21,12 @@ export default function Peer({ peer }: PeerProps) {
 
     
     return (
-        <div className="relative w-full h-full bg-neutral-800 rounded-md overflow-hidden">
+        <div className="relative w-full h-full rounded-md overflow-hidden">
             {!isVideoOn ? <Avatar name={peer.name} /> : null}
             <span className="z-10 absolute bottom-4 left-4 text-neutral-200 text-sm">{peer.name} {peer.isLocal ? "(You)" : ""}</span>
             <video
                 ref={videoRef}
-                // className={`${peer.isLocal ? "scale-x-[-1] object-cover w-full h-full" : ""}`}
-                className="scale-x-[-1] object-cover w-full h-full rounded-md"
+                className="scale-x-[-1] object-contain w-full h-full rounded-md"
                 autoPlay
                 muted
                 playsInline
