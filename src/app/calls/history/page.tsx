@@ -44,7 +44,7 @@ export default async function HistoryPage(){
                             calls.length !== 0 ? (
                                 calls.map((call) => (
                                     <TableRow key={call.id}>
-                                        <TableCell className="font-medium truncate">{call.name}</TableCell>
+                                        <TableCell className="font-medium truncate">{call.title}</TableCell>
                                         <TableCell>{new Date(call.startTime).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}</TableCell>
                                         <TableCell>{new Date(call.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</TableCell>
                                         <TableCell className="text-right">{call.endTime ? new Date(call.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'null'}</TableCell>
