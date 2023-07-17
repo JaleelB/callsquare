@@ -67,7 +67,7 @@ export async function PATCH(req: Request) {
         });
 
 
-        if (otherParticipants.length <= 1) {
+        if (otherParticipants.length === 0) {
             
             const managementToken = await generateManagementToken();
             const response = await fetch(`${env.TOKEN_ENDPOINT}/active-rooms/${body.roomId}/end-room`, {

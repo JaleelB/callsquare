@@ -88,7 +88,7 @@ export default function CallFooter () {
     } 
     
     await actions.leave();
-    router.push("/calls")
+    router.replace("/calls")
   }
 
   async function handleCopy(text: string){

@@ -2,7 +2,6 @@
 import { selectIsConnectedToRoom, useHMSActions, useHMSStore } from "@100mslive/react-sdk";
 import Cookies from 'js-cookie';
 import React from "react";
-import { useEffect } from "react";
 import CallFooter from "~/components/call-footer";
 import Conference from "~/components/conference";
 import { useParams, useRouter } from "next/navigation";
@@ -23,8 +22,8 @@ export default function CallPage(){
     const roomName = Cookies.get("room-name");
     const roomId = Cookies.get("room-id");
     const unAuthUsername = Cookies.get("username");
-    
-    useEffect(() => {
+
+    React.useEffect(() => {
 
         async function joinCall(){
             
@@ -86,7 +85,7 @@ export default function CallPage(){
 
     }, [hmsActions, toast, params.slug, router, roomName, roomId, unAuthUsername]);
 
-    useEffect(() => {
+    React.useEffect(() => {
         window.onunload = () => {
             if (isConnected) {
 
