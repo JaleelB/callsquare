@@ -123,11 +123,7 @@ export default function IndexPage(){
                             A video meeting platform built with Next.js 13
                         </h1>
                         <p className='text-muted-foreground text-base sm:text-lg'>Connect, collaborate, and communicate via premium video calls with ease.</p>
-                        <Link 
-                            href="https://github.com/JaleelB/callsquare"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
+                        <Link href="/register">
                             <Button size="lg" className='font-normal py-6'>
                                 Try Callsquare
                             </Button>

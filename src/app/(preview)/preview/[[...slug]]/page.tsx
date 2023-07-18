@@ -1,25 +1,22 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client";
-import { MicOnIcon, MicOffIcon, VideoOnIcon, VideoOffIcon } from "@100mslive/react-icons";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useEffect, useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
 import { joinSchema } from "~/schemas/join";
 import { useParams, useRouter } from "next/navigation";
-import Video from "~/components/ui/video";
 import React from "react";
 import Cookies from "js-cookie";
 import { Button } from "~/components/ui/button";
 import { Input } from "~/components/ui/input";
 import { useToast } from "~/components/ui/use-toast";
+import { Icons } from "~/components/ui/icons";
+import Link from "next/link";
 
 type FormData = z.infer<typeof joinSchema> 
 
 export default function CallPreviewPage(){
 
-    const [audio, setAudio] = useState(false);
-    const [video, setVideo] = useState(false);
     const router = useRouter();
     const { 
         register, 
@@ -29,36 +26,9 @@ export default function CallPreviewPage(){
         resolver: zodResolver(joinSchema)
     });
     const params = useParams();
-    const videoRef = useRef<HTMLVideoElement>(null);
     const { toast } = useToast()
     
 
-    useEffect(() => {
-        // Request the user's media stream
-        navigator.mediaDevices.getUserMedia({ video: true, audio: true })
-            .then(stream => {
-                // If the video ref is set and the stream is available, set the video source
-                if (videoRef.current) {
-                    videoRef.current.srcObject = stream;
-                }
-    
-                // Get all video tracks in the stream
-                const videoTracks = stream.getTracks().filter(track => track.kind === 'video');
-                // If the video state is false, mute all video tracks
-                if (!video) {
-                    videoTracks.forEach(track => track.enabled = false);
-                } else {
-                    // If the video state is true, unmute all video tracks
-                    videoTracks.forEach(track => track.enabled = true);
-                }
-            })
-            .catch(err => {
-                console.error('Error getting user media:', err);
-            });
-    }, [video]);
-    
-
-    
     async function joinCall(data: FormData){
         try {
     
@@ -94,64 +64,31 @@ export default function CallPreviewPage(){
     
 
     return(
-        <section className="w-full h-full flex justify-center items-center p-4">
-            <div className="w-full flex flex-col items-center justify-center h-[500px] sm:h-[600px]">
-                <div className="relative bg-neutral-600 flex items-center justify-center flex-grow w-full max-w-[650px] h-full m-8 sm:m-4">
-                    {!video ? (
-                        <p className="text-xl sm:text-2xl md:text-3xl text-white">Camera off</p>
-                    ) : 
-                        <Video ref={videoRef}/>
-                    }
-                    <div className="absolute w-full flex justify-start items-center gap-2 bottom-4 pl-4">
-                        <Button 
-                            size="sm"
-                            variant="ghost" 
-                            onClick={() => setAudio(!audio)}
-                            className="rounded-full flex justify-center items-center border border-white py-6 px-4"
-                        >
-                            {
-                                audio ? 
-                                <MicOnIcon color="white" width={20} height={20}/> 
-                                : <MicOffIcon color="white" width={20} height={20}/>
-                            }
-                        </Button>
-                        <Button 
-                            size="sm"
-                            variant="ghost" 
-                            onClick={() => setVideo(!video)}
-                            className="rounded-full flex justify-center items-center py-6 px-4 border border-white"
-                        >
-                            {
-                                video ? 
-                                <VideoOnIcon color="white" width={20} height={20}/> 
-                                : <VideoOffIcon color="white" width={20} height={20}/>
-                            }
-                        </Button>
-                    </div>
+        <section className="w-full max-w-7xl flex justify-center items-center sm:-mt-20 mx-auto">
+            <div className="mx-auto flex flex-col gap-8 w-[330px] sm:w-[370px]">
+                <div>
+                    <Link href="/">
+                        <Icons.camera height={49} width={60} className="-ml-3 mb-3"/>
+                    </Link>
+                    <h1 className="text-2xl font-medium tracking-tight mb-0.5">Ready to join?</h1>
+                    <p className="text-muted-foreground">Enter you name to join the video call</p>
                 </div>
-                <div className="flex flex-col items-center justify-center w-full sm:w-[480px] m-4">
-                    <div className="flex flex-col items-center w-full mb-6">
-                        <h1 className="text-2xl sm:text-3xl">Ready to join?</h1>
-                        <p className="mt-2 text-sm sm:text-base sm:mt-4">Enter you name to join the conversation</p>
-                    </div>
-                    <div className="w-full">
-                        <form className="w-full flex flex-col sm:flex-row gap-2" onSubmit={handleSubmit(joinCall)}>
-                            <Input 
-                                {...register('name')}
-                                placeholder="Enter your name"
-                                type="text"
-                            />
-                            {errors.name && typeof errors.name.message === 'string' && <p className='mt-2 text-sm text-red-500'>{errors.name.message}</p>}
-                            <Button 
-                                size="lg" 
-                                type="submit"
-                                className="rounded whitespace-nowrap w-full sm:w-auto sm:mt-0"
-                            >
-                                Join Now
-                            </Button>
-                        </form>
-                    </div>
-                </div>
+                <form className="w-full" onSubmit={handleSubmit(joinCall)}>
+                    <Input 
+                        {...register('name')}
+                        placeholder="Enter your name"
+                        type="text"
+                    />
+                    {errors.name && typeof errors.name.message === 'string' && <p className='mt-2 text-sm text-red-500'>{errors.name.message}</p>}
+                    <Button 
+                        size="lg" 
+                        type="submit"
+                        className="whitespace-nowrap w-full mt-6"
+                    >
+                        <Icons.join color="white" width={20} height={20} className="mr-2"/>
+                        Join Now
+                    </Button>
+                </form>
             </div>
         </section>
     )

@@ -12,29 +12,24 @@ export default function HomePageLayout({
     <div className="flex min-h-screen flex-col">
         {/* @ts-expect-error Server Component */}
         <FullNav>
-          <div className='hidden sm:flex'>
-            <Button className="mr-2 rounded-md font-normal" variant='ghost'>
-              <Link  href={"/login"}>
+          <div className='flex gap-x-1.5'>
+            <Link  href={"/login"}>
+              <Button 
+                className="mr-2 rounded-md font-normal hidden sm:block" 
+                variant='ghost'
+                size="sm"
+              >
                 Sign in
+              </Button>
+            </Link>
+             <Link  href={"/register"}>
+              <Button 
+                className="rounded-md text-xs md:text-[12px] font-normal"
+                size="sm"
+              >
+                Try Callsquare
+                </Button>
               </Link>
-            </Button> 
-            <Button className="rounded-md font-normal">
-              <Link  href={"/register"}>
-                Get Started
-              </Link>
-            </Button> 
-          </div>
-          <div className='flex sm:hidden'>
-            <Button className="mr-2 rounded-md font-normal" variant='ghost' size="sm">
-              <Link  href={"/login"}>
-                Sign in
-              </Link>
-            </Button> 
-            <Button className="rounded-md font-normal" size="sm">
-              <Link  href={"/register"}>
-                Get Started
-              </Link>
-            </Button> 
           </div>
         </FullNav>
         <main className="flex-1 w-screen">

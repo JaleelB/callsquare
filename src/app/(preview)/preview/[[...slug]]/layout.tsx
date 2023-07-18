@@ -1,7 +1,6 @@
-import { Button } from "@react-email/components";
 import Link from "next/link";
 import FullNav from "~/components/full-nav";
-import { Icons } from "~/components/ui/icons";
+import { Button } from "~/components/ui/button";
 
 export default function CallPreviewLayout({
     children,
@@ -11,19 +10,22 @@ export default function CallPreviewLayout({
 
   return (
     <div>
-      <div className="absolute">
+      <div className="fixed z-40">
         {/* @ts-expect-error Server Component */}
         <FullNav>
-            <Button className="rounded-md">
-              <Link href={'/'} className="flex items-center">
-                Invite
-                <Icons.invite className="ml-2" width={20} height={20} color="#fff" />
-              </Link> 
+          <Link  href={"/login"}>
+            <Button 
+              className="rounded-md text-xs md:text-sm px-5 font-normal"
+              size="sm"
+              variant="secondary"
+            >
+              Sign in
             </Button>
+          </Link>
         </FullNav>
       </div>
-      <main className="w-screen h-screen fixed">
-          {children}
+      <main className="flex items-center w-screen min-h-screen">
+        {children}
       </main>
     </div>
   );
