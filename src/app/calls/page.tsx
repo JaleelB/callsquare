@@ -1,6 +1,6 @@
 import { type Metadata } from "next";
 import Link from "next/link";
-import Badge from "~/components/ui/badge";
+import { Badge } from "~/components/ui/badge";
 import { Icons } from "~/components/ui/icons";
 import { formatDate } from "~/lib/date";
 import { getCurrentUser } from "~/lib/session";
@@ -51,8 +51,8 @@ export default async function CallsPage(){
             <section className="container max-w-[1400px] space-y-6 mb-8 md:mb-12 lg:mb-16 mx-auto">
                 <div className="flex flex-col items-center gap-4 text-center">
                     <div>
-                        <Badge date={formatDate(new Date())}/>
-                        <h1 className="mt-4 text-4xl text-slate-900 md:text-5xl lg:text-[50px] font-semibold leading-none px-4 md:px-8">
+                        <Badge variant="secondary">{formatDate(new Date())}</Badge>
+                        <h1 className="mt-4 text-4xl md:text-5xl lg:text-[50px] font-semibold leading-none px-4 md:px-8">
                             {`Welcome ${user?.name as string}`}
                         </h1>
                     </div>
