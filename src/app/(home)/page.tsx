@@ -123,6 +123,15 @@ export default function IndexPage(){
                             A video meeting platform built with Next.js 13
                         </h1>
                         <p className='text-muted-foreground text-base sm:text-lg'>Connect, collaborate, and communicate via premium video calls with ease.</p>
+                        <Link 
+                            href="https://github.com/JaleelB/callsquare"
+                            target="_blank"
+                            rel="noreferrer"
+                        >
+                            <Button size="lg" className='font-normal py-6'>
+                                Try Callsquare
+                            </Button>
+                        </Link>
                     </div>
                     <Image
                         src="/hero-image.png"
@@ -201,7 +210,6 @@ export default function IndexPage(){
                     
                     <Link 
                         href="https://github.com/JaleelB/callsquare"
-                        className={`${badgeVariants({ variant: "secondary" })} w-fit`}
                         target="_blank"
                         rel="noreferrer"
                     >
