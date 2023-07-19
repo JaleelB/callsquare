@@ -8,8 +8,6 @@ import { generateManagementToken } from "~/server/management-token"
 
 const callCreateSchema = z.object({
     callName: z.string().uuid(),
-    audio: z.boolean(),
-    video: z.boolean(),
 })
 
 interface CallCreateBody {

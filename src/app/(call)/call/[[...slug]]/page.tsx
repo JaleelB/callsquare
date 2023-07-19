@@ -6,7 +6,7 @@ import CallFooter from "~/components/call-footer";
 import Conference from "~/components/conference";
 import { useParams, useRouter } from "next/navigation";
 import { getSession } from "next-auth/react";
-import { type RoomCodeResponse } from "~/types/room";
+import { type RoomCodeResponse } from "~/types/types";
 import { extractId } from "~/lib/extract-id";
 import { useToast } from "~/components/ui/use-toast";
 

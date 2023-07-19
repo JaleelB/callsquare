@@ -24,13 +24,13 @@ interface InviteUserEmailProps {
     inviteLink?: string;
 }
 
-export default function InviteEmail ({
+export const InviteEmail: React.FC<Readonly<InviteUserEmailProps>> = ({
     recipientUsername = 'zenorocha',
     senderImage,
     invitedByUsername = 'bukinoshita',
     invitedByEmail = 'bukinoshita@gmail.com',
     inviteLink,
-}: InviteUserEmailProps) {
+}: InviteUserEmailProps)  => {
 
     const previewText = `Join ${invitedByUsername} on Callsquare`;
 

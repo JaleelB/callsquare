@@ -23,7 +23,7 @@ export default function UserAccountDropdown({ user }: DropdownProps) {
     return (
         <DropdownMenu>
             <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className='py-6'>
+                <Button variant="ghost" className='px-0 py-0 md:px-4 md:py-6'>
                     <UserAvatarLabelGroup user={user}/>
                 </Button>
             </DropdownMenuTrigger>
