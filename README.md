@@ -1,28 +1,69 @@
-# Create T3 App
+# Callsquare
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+> **Warning**
+> This is a work-in-progress and not the finished product.
+>
+> I work on this project fir an hour or so whenever I have free time during the night after work. Feel free to leave feature suggestions and/or contribute to the project.
 
-## What's next? How do I make an app with this?
+## About this project
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+This project was conceived as an experiment to explore the capabilities of Next.js 13. The primary objective was to build a modern application that incorporates a variety of features including, but not limited to, authentication, API route handlers, middleware, and server components.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+The application is designed to simulate a video call platform, providing a practical context in which to apply and test these features. It leverages the power of Next.js 13 to handle server-side operations, routing, and server side rendering.
+
+Key features of the application include:
+
+- User Authentication: Ensuring secure access to the application and protecting user data.
+- API Routes: Facilitating communication between the client and server, enabling data exchange for various application features.
+- iddleware: Managing the sequence of functions that process requests and responses.
+- Server Components: Utilizing Next.js 13's server components to deliver an optimized user experience.
+T
+his project is an ongoing experiment, with plans for further exploration and expansion of its capabilities.
+
+## Known Issues
+
+A list of things not working right now:
+
+1. Share screen functionality is not working.
+2. Join functionality for unauthenticated users is not working.
+3. Discord authentication is not working.
+
+## Tech Stack
 
 - [Next.js](https://nextjs.org)
 - [NextAuth.js](https://next-auth.js.org)
 - [Prisma](https://prisma.io)
 - [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- [100ms](https://100ms.live)
+- [Shadcn UI](https://ui.shadcn.com)
+- [React Email](https://react.email/)
+- [Resend](https://resend.com/)
 
-## Learn More
+## Features to be implemented
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- [x] Invite email with **React Email** and **Resend**
+- [ ] Authentication with **Clerk**
+- [ ] Scheduling calls
+- [ ] Screen Annotations
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Installation
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+### 1. Clone the repository
 
-## How do I deploy this?
+```bash
+git clone https://github.com/JaleelB/callsquare
+```
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+### 2. Install dependencies
+
+```bash
+yarn
+```
+
+### 3. Create a `.env` file
+
+Create a `.env` file in the root directory and add the environment variables as shown in the `.env.example` file.
+
+## Contributing
+
+Contributions are welcome! Please open an issue if you have any questions or suggestions. Your contributions are welcomed and will be acknowledged.
