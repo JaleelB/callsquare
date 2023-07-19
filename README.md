@@ -5,6 +5,8 @@
 >
 > I work on this project fir an hour or so whenever I have free time during the night after work. Feel free to leave feature suggestions and/or contribute to the project.
 
+[![Callsquare](./public/web-shot.png)](https://callsquare.jaleelbennett.com/)
+
 ## About this project
 
 This project was conceived as an experiment to explore the capabilities of Next.js 13. The primary objective was to build a modern application that incorporates a variety of features including, but not limited to, authentication, API route handlers, middleware, and server components.

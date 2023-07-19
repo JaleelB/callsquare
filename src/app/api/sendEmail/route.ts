@@ -16,7 +16,7 @@ import { InviteEmail } from '~/components/email-template';
 
 const resend = new Resend(env.RESEND_API_KEY);
 
-export const emailSchema = z.object({
+const emailSchema = z.object({
     recipient: z.string(),
     link: z.string(),
     recipientUsername: z.string(),
