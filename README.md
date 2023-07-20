@@ -27,8 +27,7 @@ his project is an ongoing experiment, with plans for further exploration and exp
 A list of things not working right now:
 
 1. Share screen functionality is not working.
-2. Join functionality for unauthenticated users is not working.
-3. Discord authentication is not working.
+2. Invite email is not working. (Using React Email and Nodmailer, email sending works, but Resend with React Email throws this error when sending: "The gmail.com domain is not verified. Please, add and verify your domain on Resend". The doamin has been verified and an api key generated for it. I can't seem to find any documentation or issues online that address this.)
 
 ## Tech Stack
 

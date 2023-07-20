@@ -53,6 +53,5 @@ export async function POST(req: Request) {
         }
 
         return new Response("Something went wrong", { status: 500 })
-        
     }
 }

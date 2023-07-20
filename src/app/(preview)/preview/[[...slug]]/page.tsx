@@ -3,7 +3,7 @@
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useForm } from "react-hook-form";
 import { type z } from "zod";
-import { joinSchema } from "~/schemas/join";
+import { previewJoinSchema } from "~/schemas/join";
 import { useParams, useRouter } from "next/navigation";
 import React from "react";
 import Cookies from "js-cookie";
@@ -13,7 +13,7 @@ import { useToast } from "~/components/ui/use-toast";
 import { Icons } from "~/components/ui/icons";
 import Link from "next/link";
 
-type FormData = z.infer<typeof joinSchema> 
+type FormData = z.infer<typeof previewJoinSchema> 
 
 export default function CallPreviewPage(){
 
@@ -23,13 +23,14 @@ export default function CallPreviewPage(){
         handleSubmit, 
         formState: { errors } 
     } = useForm<FormData>({
-        resolver: zodResolver(joinSchema)
+        resolver: zodResolver(previewJoinSchema)
     });
     const params = useParams();
-    const { toast } = useToast()
-    
+    const { toast } = useToast();
+
 
     async function joinCall(data: FormData){
+
         try {
     
             const joinResponse = await fetch(`/api/call/join`, {
