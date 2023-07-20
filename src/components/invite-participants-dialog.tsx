@@ -47,7 +47,6 @@ export default function InviteParticipantsDialog (card: CardProps)  {
             const response = await fetch('/api/sendEmail', {
               method: 'POST',
               headers: {
-                // 'Authorization': `Bearer ${env.RESEND_API_KEY}`,
                 'Content-Type': 'application/json',
               },
               body: JSON.stringify({
@@ -59,11 +58,8 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                 invitedByEmail: currentUser.user.email,
               }),
             });
-
-            const responseData = await response.json();
-            console.log(responseData)
       
-            if (responseData.error) {
+            if (!response.ok) {
               throw new Error('Failed to send email');
             }
       

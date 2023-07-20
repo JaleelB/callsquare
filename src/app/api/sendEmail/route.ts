@@ -1,18 +1,9 @@
-// import { NextResponse } from 'next/server';
-// import { type EmailProps, sendEmail } from '~/lib/send-email';
-
-// export async function POST(req: Request) {
-//     const body = await req.json() as EmailProps;
-//     await sendEmail(body);
-//     return NextResponse.json({ message: 'Email sent successfully' });
-// }
-
-import { NextResponse } from 'next/server';
 import { Resend } from 'resend';
 import { env } from '~/env.mjs';
 import { type EmailProps } from '~/types/types';
 import { z } from "zod"
 import { InviteEmail } from '~/components/email-template';
+import { type ErrorResponse } from "resend"
 
 const resend = new Resend(env.RESEND_API_KEY);
 
@@ -31,7 +22,8 @@ export async function POST(req: Request) {
     const body = emailSchema.parse(json);
     
     try {
-        const data = await resend.emails.send({
+
+        await resend.emails.send({
             from: body.invitedByEmail,
             to: body.recipient,
             subject: 'Invitation to join call on Callsquare',
@@ -46,11 +38,21 @@ export async function POST(req: Request) {
             ),
         });
 
-        return NextResponse.json({
-            data: data,
-        });
+        return new Response(null, { status: 200 })
         
-  } catch (error) {
-    return NextResponse.json({ error });
-  }
+    } catch (error) {
+
+        const resendError = error as ErrorResponse
+
+        if (resendError?.error?.message) {
+        return new Response(resendError.error.message, { status: 429 })
+        }
+
+        if (error instanceof Error) {
+        return new Response(error.message, { status: 500 })
+        }
+
+        return new Response("Something went wrong", { status: 500 })
+        
+    }
 }
