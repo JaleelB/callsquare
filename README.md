@@ -65,6 +65,16 @@ yarn
 
 Create a `.env` file in the root directory and add the environment variables as shown in the `.env.example` file.
 
+## How do I deploy this?
+
+Follow the deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information
+
+## License
+
+Licensed under the MIT License. Check the [LICENSE](./LICENSE) file for details.
+
 ## Contributing
 
 Contributions are welcome! Please open an issue if you have any questions or suggestions. Your contributions are welcomed and will be acknowledged.
+
+See the [contributing guide](./CONTRIBUTING.md) for more information.
