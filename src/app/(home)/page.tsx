@@ -121,7 +121,7 @@ export default function IndexPage(){
                             <Icons.chevronRight className="w-4 h-4 ml-1" />
                         </Link>
                         <h1 className="text-4xl md:text-6xl max-w-3xl font-semibold leading-tight">
-                            A video calls made possible with Next.js 13
+                            Video calls made possible with Next.js 13
                         </h1>
                         <p className='text-muted-foreground text-base sm:text-lg max-w-2xl'>{siteConfig.description}</p>
                         <Link href="/register">
