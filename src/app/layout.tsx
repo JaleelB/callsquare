@@ -3,12 +3,12 @@ import RoomProvider from '~/components/room-provider';
 import CallIdProvider from '~/context/call-id-context';
 import { Toaster } from '~/components/ui/toaster';
 import { siteConfig } from '~/config/site-config';
+import { Analytics } from '@vercel/analytics/react';
 
 
 export const metadata = {
   title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
+    default: siteConfig.name
   },
   description: siteConfig.description,
   keywords: [
@@ -40,12 +40,20 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     siteName: siteConfig.name,
+    images: [
+      {
+        url: `${siteConfig.url}/web-shot.png`,
+        width: 1200,
+        height: 715,
+        alt: "Callsquare",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: siteConfig.name,
     description: siteConfig.description,
-    images: [`${siteConfig.url}/og.jpg`],
+    images: [`${siteConfig.url}/web-shot.png`],
     creator: "@jal_eelll",
   },
   icons: {
@@ -69,6 +77,7 @@ export default function RootLayout({
         <RoomProvider>
           <CallIdProvider>
             {children}
+            <Analytics />
             <Toaster/>
           </CallIdProvider>
         </RoomProvider>

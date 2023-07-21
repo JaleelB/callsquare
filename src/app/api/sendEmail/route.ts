@@ -23,8 +23,8 @@ export async function POST(req: Request) {
     
     try {
 
-        await resend.emails.send({
-            from: body.invitedByEmail,
+        await resend.sendEmail({
+            from: `Callsquare <${body.invitedByEmail}>`,
             to: body.recipient,
             subject: 'Invitation to join call on Callsquare',
             react: (
