@@ -68,7 +68,7 @@ export default function SocialAuthForm () {
               className="mr-3"
             />
           )}
-          Continue with {provider.name.charAt(0).toUpperCase() + provider.name.slice(1)}
+          Continue with {provider.name === "github" ? "GitHub" : provider.name.charAt(0).toUpperCase() + provider.name.slice(1)}
         </Button>
       ))}
     </section>
