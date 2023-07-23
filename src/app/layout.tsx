@@ -4,7 +4,9 @@ import CallIdProvider from '~/context/call-id-context';
 import { Toaster } from '~/components/ui/toaster';
 import { siteConfig } from '~/config/site-config';
 import { Analytics } from '@vercel/analytics/react';
+import { Inter } from "next/font/google";
 
+const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: {
@@ -73,7 +75,7 @@ export default function RootLayout({
 
   return (
     <html lang="en">
-      <body>
+      <body className={inter.className}>
         <RoomProvider>
           <CallIdProvider>
             {children}
