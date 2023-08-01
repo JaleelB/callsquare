@@ -44,7 +44,7 @@ A list of things not working right now:
 
 - [x] Invite email with **React Email** and **Resend**
 - [ ] Authentication with **Clerk**
-- [ ] Scheduling calls
+- [x] Scheduling calls
 - [ ] Screen Annotations
 - [ ] Rejoiing calls
 - [ ] Call transcription
