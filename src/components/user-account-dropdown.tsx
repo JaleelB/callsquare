@@ -41,6 +41,7 @@ export default function UserAccountDropdown({ user }: DropdownProps) {
                         Settings</DropdownMenuItem>
                     <DropdownMenuSeparator />
                     <DropdownMenuItem
+                        className='cursor-pointer'
                         onClick={(event) => {
                             event.preventDefault()
                             signOut({
