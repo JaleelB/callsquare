@@ -81,18 +81,6 @@ export default function InviteParticipantsDialog (card: CardProps)  {
         }
     }
 
-    async function handleCopy(text: string){
-
-        await copyToClipboard(text);
-        if(isCopied){
-            toast({
-                title: 'Copied to clipboard',
-                description: 'The invite link has been copied to your clipboard.',
-                variant: 'default'
-            });
-        }
-    }
-      
 
     return (
         <Dialog>
@@ -148,7 +136,16 @@ export default function InviteParticipantsDialog (card: CardProps)  {
                             variant='secondary' 
                             size='lg'
                             className="rounded-md font-normal flex mt-2 md:mt-0 md:ml-2 ml-auto w-full md:w-fit"
-                            onClick={() => handleCopy(`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`)}
+                            onClick={async() =>{
+                                await copyToClipboard(`${env.NEXT_PUBLIC_APP_URL}/call/${callId}`);
+                                if(isCopied){
+                                    toast({
+                                        title: 'Copied to clipboard',
+                                        description: 'The invite link has been copied to your clipboard.',
+                                        variant: 'default'
+                                    });
+                                }
+                            }}
                         >
                             Copy
                         </Button>

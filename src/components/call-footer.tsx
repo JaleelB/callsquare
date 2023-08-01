@@ -91,16 +91,6 @@ export default function CallFooter () {
     router.replace("/calls")
   }
 
-  async function handleCopy(text: string){
-    await copyToClipboard(text);
-    if(isCopied){
-        toast({
-            title: 'Copied to clipboard',
-            description: 'The invite link has been copied to your clipboard.',
-            variant: 'default'
-        });
-    }
-}
 
   return (
     <footer className={`rounded-lg flex items-center mt-auto justify-center sm:justify-start px-5 py-8`}>
@@ -140,7 +130,16 @@ export default function CallFooter () {
         <Button 
           size="sm"
           variant="ghost" 
-          onClick={()=> handleCopy(window.location.href)}
+          onClick={async() =>{
+            await copyToClipboard(window.location.href);
+            if(isCopied){
+                toast({
+                    title: 'Copied to clipboard',
+                    description: 'The invite link has been copied to your clipboard.',
+                    variant: 'default'
+                });
+            }
+        }}
           className="rounded-full flex justify-center items-center py-6 px-4 bg-neutral-800"
         >
           <Icons.invite color="white" width={20} height={20}/>
