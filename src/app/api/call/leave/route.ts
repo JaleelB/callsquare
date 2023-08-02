@@ -66,6 +66,8 @@ export async function PATCH(req: Request) {
             },
         });
 
+        console.log("participant: ",participant, "updatedPArticipant: ",updatedParticipant, "other participant:", otherParticipants)
+
 
         if (otherParticipants.length === 0) {
             

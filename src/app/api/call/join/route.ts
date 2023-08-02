@@ -44,12 +44,14 @@ export async function POST(req: Request) {
             return new Response("Not Found", { status: 404 })
         }
     
-        let participant;
+        let participants;
         if (userId) {
-            participant = await prisma.participant.findUnique({
-                where: { id: userId },
+            participants = await prisma.participant.findMany({
+                where: { userId: userId, callId: call.id },
             });
         }
+
+        let participant = participants ? participants[0] : null;
         
         if (!participant) {
             participant = await prisma.participant.create({
@@ -66,7 +68,8 @@ export async function POST(req: Request) {
             });
         } else {
             participant = await prisma.participant.update({
-                where: { id: userId },
+                // where: { id: userId },
+                where: { id: participant.id },
                 data: { 
                     callName: call.name,
                     status: 'joined',

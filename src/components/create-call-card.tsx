@@ -117,8 +117,8 @@ export default function CreateCallCard (card: CardProps)  {
                 save this link, as you&nbsp;ll need it to join the call too.
                 </DialogDescription>
             </DialogHeader>
-            <div className='w-full flex flex-col md:flex-row justify-between items-end mb-2'>
-              <div className='w-full space-y-1 mt-4'>
+            <div className='w-full flex flex-col justify-between items-end mb-2'>
+              <div className='w-full space-y-1 my-4'>
                   <Label htmlFor="link">Call Link</Label>
                   <Input 
                       disabled 
@@ -142,7 +142,7 @@ export default function CreateCallCard (card: CardProps)  {
                     }
                 }}
               >
-                  Copy
+                  Copy Link
               </Button>
             </div>
           </DialogContent>
