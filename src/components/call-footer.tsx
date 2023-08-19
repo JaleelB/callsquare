@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"; 
-import React, { useEffect } from 'react';
+import * as React from 'react';
 import { useAVToggle, useHMSActions } from '@100mslive/react-sdk';
 import {
   MicOffIcon,
@@ -10,13 +10,14 @@ import {
   HangUpIcon,
   ShareScreenIcon,
 } from '@100mslive/react-icons';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { extractId } from '~/lib/extract-id';
 import useClipboard from '~/hooks/use-copy';
 import { Icons } from './ui/icons';
 import { Button } from './ui/button';
 import { useToast } from './ui/use-toast';
+import RejoinCall from './rejoin-call';
 
 
 export default function CallFooter () {
@@ -28,14 +29,16 @@ export default function CallFooter () {
     toggleVideo,
   } = useAVToggle();
   const actions = useHMSActions();
-  const router = useRouter();
   const { toast } = useToast()
   const [isScreenShareEnabled, setIsScreenShareEnabled] = React.useState(false);
   const params = useParams();
   const roomId = Cookies.get("room-id");
+  const roomName = Cookies.get("room-name");
   const { isCopied, copyToClipboard } = useClipboard();
 
-  useEffect(() => {
+  const [showRejoinPopup, setShowRejoinPopup] = React.useState(false);
+
+  React.useEffect(() => {
 
     async function enableScreenShare() {
       if(isScreenShareEnabled){
@@ -64,33 +67,6 @@ export default function CallFooter () {
     void enableScreenShare();
     
   }, [actions, isScreenShareEnabled, toast])
-
-  async function leaveCall() {
-    const roomName = Cookies.get("room-name");
-    
-    const response = await fetch(`/api/call/leave`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        callName: roomName ? roomName : extractId(params.slug as string),
-        roomId: roomId,
-      }),
-    })
-
-    if(!response.ok){
-      toast({
-        title: "Something went wrong.",
-        description: "Your call cannot be left. Please try again.",
-        variant: "destructive",
-      })
-    } 
-    
-    await actions.leave();
-    router.replace("/calls")
-  }
-
 
   return (
     <footer className={`rounded-lg flex items-center mt-auto justify-center sm:justify-start px-5 py-8`}>
@@ -147,12 +123,22 @@ export default function CallFooter () {
         <Button 
           size="sm"
           variant="ghost" 
-          onClick={() => leaveCall()}
+          onClick={() => {
+            setShowRejoinPopup(true)
+          }}
           className="rounded-full flex justify-center py-6 bg-red-500"
         >
           <HangUpIcon color='white' width={25} height={25} />
         </Button>
       </div>
+      {
+        showRejoinPopup &&
+        <RejoinCall
+          roomName={roomName ? roomName : extractId(params.slug as string)}
+          stayOnScreenHandler={() => setShowRejoinPopup(false)}
+          roomId={roomId as string}
+        />
+      }
     </footer>
   );
 }

@@ -102,6 +102,7 @@ export default function CallPage(){
         } 
           
         await actions.leave();
+        
     }, [roomName, params.slug, roomId, actions, toast]);
 
     React.useEffect(() => {
