@@ -46,6 +46,9 @@ A list of things not working right now:
 - [ ] Authentication with **Clerk**
 - [x] Scheduling calls
 - [ ] Screen Annotations
+- [ ] Deleting calls
+- [ ] Call recording
+- [ ] View call info
 - [x] Rejoiing calls
 - [ ] Call transcription
 - [ ] Call limits
