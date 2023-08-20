@@ -46,7 +46,7 @@ A list of things not working right now:
 - [ ] Authentication with **Clerk**
 - [x] Scheduling calls
 - [ ] Screen Annotations
-- [ ] Rejoiing calls
+- [x] Rejoiing calls
 - [ ] Call transcription
 - [ ] Call limits
 
