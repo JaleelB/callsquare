@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation";
+import DeleteCallActions from "~/components/delete-call-actions";
 import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "~/components/ui/table";
 import { getCurrentUser } from "~/lib/session";
+import { cn } from "~/lib/utils";
 import { prisma } from "~/server/db";
 
 export default async function HistoryPage(){
@@ -24,6 +26,7 @@ export default async function HistoryPage(){
         take: 30,
     });
     
+    
     return (
         <div className="container max-w-[1400px] mb-12 mx-auto">
             <h1 className="text-2xl md:text-[30px] font-semibold leading-tight mb-1">Call history</h1>
@@ -36,7 +39,8 @@ export default async function HistoryPage(){
                             <TableHead>Call name</TableHead>
                             <TableHead>Date</TableHead>
                             <TableHead>Start time</TableHead>
-                            <TableHead className="text-right">End time</TableHead>
+                            <TableHead>End time</TableHead>
+                            <TableHead></TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -44,10 +48,13 @@ export default async function HistoryPage(){
                             calls.length !== 0 ? (
                                 calls.map((call) => (
                                     <TableRow key={call.id}>
-                                        <TableCell className="font-medium truncate">{call.title}</TableCell>
-                                        <TableCell>{new Date(call.startTime).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}</TableCell>
-                                        <TableCell>{new Date(call.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</TableCell>
-                                        <TableCell className="text-right">{call.endTime ? new Date(call.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'null'}</TableCell>
+                                        <TableCell className={cn("font-medium truncate py-2")}>{call.title}</TableCell>
+                                        <TableCell className={cn("w-40 py-2")}>{new Date(call.startTime).toLocaleDateString('en-US', { month: '2-digit', day: '2-digit', year: '2-digit' })}</TableCell>
+                                        <TableCell className={cn("w-40 py-2")}>{new Date(call.startTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</TableCell>
+                                        <TableCell className={cn("w-40 py-2")}>{call.endTime ? new Date(call.endTime).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }) : 'null'}</TableCell>
+                                        <TableCell className={cn("w-20 py-2")}>
+                                            <DeleteCallActions callId={call.id}/>
+                                        </TableCell>
                                     </TableRow>
                                 ))
                             ) : (

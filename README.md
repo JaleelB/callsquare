@@ -43,12 +43,11 @@ A list of things not working right now:
 ## Features to be implemented
 
 - [x] Invite email with **React Email** and **Resend**
-- [ ] Authentication with **Clerk**
 - [x] Scheduling calls
 - [ ] Screen Annotations
 - [ ] Deleting calls
 - [ ] Call recording
-- [ ] View call info
+- [ ] View call details
 - [x] Rejoiing calls
 - [ ] Call transcription
 - [ ] Call limits
