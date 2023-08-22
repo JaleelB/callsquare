@@ -1,6 +1,6 @@
-import SiteFooter from "~/components/footer";
-import FullNav from "~/components/full-nav";
-import UserAccountDropdown from "~/components/user-account-dropdown";
+import SiteFooter from "~/components/layout/footer";
+import FullNav from "~/components/layout/full-nav";
+import UserAccountDropdown from "~/components/layout/user-account-dropdown";
 import { getCurrentUser } from "~/lib/session";
 import { notFound } from "next/navigation"
 import CallIdProvider from "~/context/call-id-context";

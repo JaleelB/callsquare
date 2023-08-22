@@ -4,10 +4,10 @@ import { Badge } from "~/components/ui/badge";
 import { Icons } from "~/components/ui/icons";
 import { formatDate } from "~/lib/date";
 import { getCurrentUser } from "~/lib/session";
-import JoinCallDialog from "~/components/join-call-dialog";
-import InviteParticipantsDialog from "~/components/invite-participants-dialog";
-import { type CardProps } from "~/components/card-shell";
-import CreateCallCard from "~/components/create-call-card";
+import JoinCallDialog from "~/components/call/join-call-dialog";
+import InviteParticipantsDialog from "~/components/call/invite-participants-dialog";
+import { type CardProps } from "~/components/layout/card-shell";
+import CreateCallCard from "~/components/call/create-call-card";
 import { Button } from "~/components/ui/button";
 
 export const metadata: Metadata = {

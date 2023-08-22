@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import { useRouter } from 'next/navigation';
-import { useToast } from "./ui/use-toast";
+import { useToast } from "../ui/use-toast";
 import { useHMSActions } from "@100mslive/react-sdk";
 import * as React from 'react';
 

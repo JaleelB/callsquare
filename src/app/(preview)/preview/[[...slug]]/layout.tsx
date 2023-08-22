@@ -1,5 +1,5 @@
 import Link from "next/link";
-import FullNav from "~/components/full-nav";
+import FullNav from "~/components/layout/full-nav";
 import { Button } from "~/components/ui/button";
 
 export default function CallPreviewLayout({

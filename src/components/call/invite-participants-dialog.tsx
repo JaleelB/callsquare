@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React, { useState } from 'react'
-import { Icons } from './ui/icons';
-import CardShell, { type CardProps } from './card-shell';
+import { Icons } from '../ui/icons';
+import CardShell, { type CardProps } from '../layout/card-shell';
 import { useForm } from 'react-hook-form';
 import { inviteSchema } from '~/schemas/invite';
 import { env } from '~/env.mjs';
@@ -11,12 +11,12 @@ import { type z } from 'zod';
 import { getSession } from 'next-auth/react';
 import { useCallId } from '~/context/call-id-context';
 import useClipboard from '~/hooks/use-copy';
-import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
+import { Button } from '../ui/button';
+import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
 import { DialogDescription } from '@radix-ui/react-dialog';
-import { useToast } from './ui/use-toast';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+import { useToast } from '../ui/use-toast';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 
 type FormData = z.infer<typeof inviteSchema>
 

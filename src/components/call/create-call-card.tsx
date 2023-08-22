@@ -1,29 +1,29 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React from 'react'
-import CardShell, { type CardProps } from './card-shell'
+import CardShell, { type CardProps } from '../layout/card-shell'
 import { useRouter } from 'next/navigation'
 import { useCallId } from '~/context/call-id-context';
-import { useToast } from './ui/use-toast';
+import { useToast } from '../ui/use-toast';
 import { 
   DropdownMenu, 
   DropdownMenuContent, 
   DropdownMenuItem, 
   DropdownMenuSeparator,
   DropdownMenuTrigger, 
-} from './ui/dropdown-menu';
-import { Button } from './ui/button';
+} from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
 import { cn } from '~/lib/utils';
-import { Icons } from './ui/icons';
+import { Icons } from '../ui/icons';
 import { 
   Dialog, 
   DialogContent, 
   DialogDescription, 
   DialogHeader, 
   DialogTitle 
-} from './ui/dialog';
-import { Label } from './ui/label';
-import { Input } from './ui/input';
+} from '../ui/dialog';
+import { Label } from '../ui/label';
+import { Input } from '../ui/input';
 import { env } from '~/env.mjs';
 import useClipboard from '~/hooks/use-copy';
 

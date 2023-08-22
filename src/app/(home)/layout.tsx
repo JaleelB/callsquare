@@ -1,6 +1,6 @@
 import Link from "next/link";
-import SiteFooter from "~/components/footer";
-import FullNav from "~/components/full-nav";
+import SiteFooter from "~/components/layout/footer";
+import FullNav from "~/components/layout/full-nav";
 import { Button } from "~/components/ui/button";
 
 export default function HomePageLayout({

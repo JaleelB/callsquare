@@ -1,19 +1,19 @@
 /* eslint-disable @typescript-eslint/no-misused-promises */
 "use client"
 import React, { useState } from 'react'
-import CardShell, { type CardProps } from './card-shell';
+import CardShell, { type CardProps } from '../layout/card-shell';
 import { useRouter } from 'next/navigation';
 import { joinCallFormSchema } from '~/schemas/call';
 import { type z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { extractId } from '~/lib/extract-id';
-import { Icons } from './ui/icons';
-import { Button } from './ui/button';
-import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from './ui/dialog';
-import { useToast } from './ui/use-toast';
-import { Input } from './ui/input';
-import { Label } from './ui/label';
+import { Icons } from '../ui/icons';
+import { Button } from '../ui/button';
+import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from '../ui/dialog';
+import { useToast } from '../ui/use-toast';
+import { Input } from '../ui/input';
+import { Label } from '../ui/label';
 
 
 type FormData = z.infer<typeof joinCallFormSchema>

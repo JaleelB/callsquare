@@ -1,10 +1,10 @@
 "use client"
 import { signOut } from 'next-auth/react';
-import UserAvatarLabelGroup from './user-avatar-label-group';
-import { useToast } from './ui/use-toast';
-import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from './ui/dropdown-menu';
-import { Button } from './ui/button';
-import { Icons } from './ui/icons';
+import UserAvatarLabelGroup from '../user-avatar-label-group';
+import { useToast } from '../ui/use-toast';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuGroup, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '../ui/dropdown-menu';
+import { Button } from '../ui/button';
+import { Icons } from '../ui/icons';
 
 interface User {
   name: string;

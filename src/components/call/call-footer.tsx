@@ -14,9 +14,9 @@ import { useParams } from 'next/navigation';
 import Cookies from 'js-cookie';
 import { extractId } from '~/lib/extract-id';
 import useClipboard from '~/hooks/use-copy';
-import { Icons } from './ui/icons';
-import { Button } from './ui/button';
-import { useToast } from './ui/use-toast';
+import { Icons } from '../ui/icons';
+import { Button } from '../ui/button';
+import { useToast } from '../ui/use-toast';
 import RejoinCall from './rejoin-call';
 
 

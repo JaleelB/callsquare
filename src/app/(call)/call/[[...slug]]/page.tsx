@@ -2,8 +2,8 @@
 import { selectIsConnectedToRoom, useHMSActions, useHMSStore } from "@100mslive/react-sdk";
 import Cookies from 'js-cookie';
 import React from "react";
-import CallFooter from "~/components/call-footer";
-import Conference from "~/components/conference";
+import CallFooter from "~/components/call/call-footer";
+import Conference from "~/components/call/conference";
 import { useParams, useRouter } from "next/navigation";
 import { getSession } from "next-auth/react";
 import { type RoomCodeResponse } from "~/types/types";

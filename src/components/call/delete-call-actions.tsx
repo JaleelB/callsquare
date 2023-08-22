@@ -5,12 +5,12 @@ import {
     DropdownMenuContent, 
     DropdownMenuLabel, 
     DropdownMenuTrigger 
-} from "./ui/dropdown-menu";
+} from "../ui/dropdown-menu";
 import { cn } from "~/lib/utils";
-import { Button } from "./ui/button";
+import { Button } from "../ui/button";
 import React from "react";
 import { Icons } from "~/components/ui/icons";
-import DeleteActionAlert from "./delete-action-alert";
+import DeleteActionAlert from "../delete-action-alert";
 
 export default function DeleteCallActions({
     callId,
