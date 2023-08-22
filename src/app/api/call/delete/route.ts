@@ -1,3 +1,4 @@
+import { revalidatePath } from "next/cache";
 import { NextResponse } from "next/server";
 import { z } from "zod";
 import { getCurrentUser } from "~/lib/session";
@@ -5,10 +6,12 @@ import { prisma } from "~/server/db";
 
 const deleteSchema = z.object({
     callId: z.string().min(8),
+    path: z.string().min(2),
 });
 
 interface DeleteCallBody {
     callId: string;
+    path: string;
 }
 
 export async function POST (req: Request) {
@@ -20,7 +23,7 @@ export async function POST (req: Request) {
     }  
 
     const json: DeleteCallBody = await req.json() as DeleteCallBody;
-    const { callId } = deleteSchema.parse(json)
+    const { callId, path } = deleteSchema.parse(json)
 
     try {
         await prisma.call.delete({
@@ -30,6 +33,7 @@ export async function POST (req: Request) {
             },
         });
 
+        revalidatePath(path);
         return NextResponse.json({success: true });
 
     } catch (error) {

@@ -12,6 +12,7 @@ import {
 import React from "react";
 import { Icons } from "~/components/ui/icons";
 import { toast } from "./ui/use-toast";
+import { usePathname, useRouter } from "next/navigation";
 
 interface ReturnData{
     success: boolean,
@@ -21,19 +22,19 @@ interface ReturnData{
 export default function DeleteActionAlert({
     showDeleteAlert,
     setShowDeleteAlert,
-    // deleteCall,
     callId,
     title,
     description,
 }:{
     showDeleteAlert: boolean,
     setShowDeleteAlert: React.Dispatch<React.SetStateAction<boolean>>,
-    // deleteCall: () => void,
     title: string,
     callId: string,
     description: string,
 }){
 
+    const pathname = usePathname();
+    const router = useRouter();
     const [isPending, startTransition] = React.useTransition();
 
     async function handleDeleteCall() {
@@ -43,7 +44,10 @@ export default function DeleteActionAlert({
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ callId: callId }),
+                body: JSON.stringify({ 
+                    callId: callId,
+                    path: pathname,
+                }),
             });
     
             const data: ReturnData = await response.json() as ReturnData;
@@ -77,8 +81,8 @@ export default function DeleteActionAlert({
                     <AlertDialogAction
                          onClick={() =>
                             startTransition(async() => {
-                                console.log("Delete button clicked");
                                 await handleDeleteCall();
+                                router.refresh();
                             })
                         }
                         className="bg-red-600 focus:ring-red-600 text-white"
