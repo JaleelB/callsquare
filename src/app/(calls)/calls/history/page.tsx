@@ -1,13 +1,29 @@
 import { redirect } from "next/navigation";
 import DeleteCallActions from "~/components/call/delete-call-actions";
-import { Table, TableHeader, TableRow, TableHead, TableBody, TableCell } from "~/components/ui/table";
+import CallHistoryPagination from "~/components/call/pagination";
+import { 
+    Table, 
+    TableHeader, 
+    TableRow,
+    TableHead, 
+    TableBody, 
+    TableCell 
+} from "~/components/ui/table";
 import { getCurrentUser } from "~/lib/session";
 import { cn } from "~/lib/utils";
 import { prisma } from "~/server/db";
 
-export default async function HistoryPage(){
+export default async function HistoryPage({ 
+    searchParams 
+}: {
+    searchParams: { 
+        page: string,
+        per_page: string,
+    }
+}){
 
-    const user = await getCurrentUser()
+    const user = await getCurrentUser();
+    const { page, per_page } = searchParams;
 
     if (!user) {
       redirect("/login")
@@ -23,8 +39,10 @@ export default async function HistoryPage(){
         orderBy: {
             startTime: 'desc',
         },
-        take: 15,
+        skip: (parseInt(page) - 1) * parseInt(per_page),
+        take: parseInt(per_page, 10),
     });
+
     
     return (
         <div className="container max-w-[1400px] mb-12 mx-auto">
@@ -66,6 +84,13 @@ export default async function HistoryPage(){
                         }
                     </TableBody>
                 </Table>
+            </div>
+            <div className="w-full flex mt-4">
+                <div className="flex-grow"></div>
+                <CallHistoryPagination 
+                    page={page} 
+                    per_page={per_page}
+                />
             </div>
         </div>
     )
