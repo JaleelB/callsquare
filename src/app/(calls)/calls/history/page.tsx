@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import PerPageDropdown from "~/components/call/call-history-per-page-dropdown";
 import DeleteCallActions from "~/components/call/delete-call-actions";
 import CallHistoryPagination from "~/components/call/pagination";
 import { 
@@ -43,7 +44,10 @@ export default async function HistoryPage({
         take: parseInt(per_page, 10),
     });
 
+    const perPageOptions = [10, 20, 30];
+    const selectedPerPage = parseInt(per_page, 10);
     
+
     return (
         <div className="container max-w-[1400px] mb-12 mx-auto">
             <h1 className="text-2xl md:text-[30px] font-semibold leading-tight mb-1">Call history</h1>
@@ -85,8 +89,14 @@ export default async function HistoryPage({
                     </TableBody>
                 </Table>
             </div>
-            <div className="w-full flex mt-4">
-                <div className="flex-grow"></div>
+            <div className="w-full flex mt-4 gap-8 items-center">
+                <div className="flex-grow hidden sm:block"></div>
+                <PerPageDropdown 
+                    options={perPageOptions}
+                    page={page}
+                    selectedPerPage={selectedPerPage}
+                />
+                <span className="text-sm">Page {page}</span>
                 <CallHistoryPagination 
                     page={page} 
                     per_page={per_page}
