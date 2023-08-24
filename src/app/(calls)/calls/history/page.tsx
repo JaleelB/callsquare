@@ -24,6 +24,11 @@ export default async function HistoryPage({
 }){
 
     const user = await getCurrentUser();
+
+    if(searchParams.page === undefined || searchParams.per_page === undefined){
+        redirect("/calls/history?page=1&per_page=10")
+    }
+
     const { page, per_page } = searchParams;
 
     if (!user) {
@@ -41,11 +46,12 @@ export default async function HistoryPage({
             startTime: 'desc',
         },
         skip: (parseInt(page) - 1) * parseInt(per_page),
-        take: parseInt(per_page, 10),
+        take: parseInt((per_page), 10),
     });
 
     const perPageOptions = [10, 20, 30];
     const selectedPerPage = parseInt(per_page, 10);
+    const totalPages = Math.ceil(calls.length / parseInt(per_page, 10));
     
 
     return (
@@ -100,6 +106,7 @@ export default async function HistoryPage({
                 <CallHistoryPagination 
                     page={page} 
                     per_page={per_page}
+                    totalPages={totalPages}
                 />
             </div>
         </div>

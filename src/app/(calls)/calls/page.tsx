@@ -66,7 +66,10 @@ export default async function CallsPage(){
                         <InviteParticipantsDialog {...cardsData[2] as CardProps} />
                     </div>
                     <Link 
-                        href="/calls/history" 
+                        href={{
+                            pathname: "/calls/history",
+                            query: { page: 1, per_page: 10 }
+                        }}
                         className="inline-flex items-center"
                     >
                         <Button 
