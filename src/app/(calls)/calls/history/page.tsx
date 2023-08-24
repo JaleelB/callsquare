@@ -49,9 +49,16 @@ export default async function HistoryPage({
         take: parseInt((per_page), 10),
     });
 
+    const totalCalls = await prisma.call.count({
+        where: { 
+            userId: user.id,
+        },
+    });
+    
+
     const perPageOptions = [10, 20, 30];
     const selectedPerPage = parseInt(per_page, 10);
-    const totalPages = Math.ceil(calls.length / parseInt(per_page, 10));
+    const totalPages = Math.ceil(totalCalls / parseInt(per_page, 10));
     
 
     return (
@@ -101,6 +108,7 @@ export default async function HistoryPage({
                     options={perPageOptions}
                     page={page}
                     selectedPerPage={selectedPerPage}
+                    totalCalls={totalCalls}
                 />
                 <span className="text-sm">Page {page}</span>
                 <CallHistoryPagination 
