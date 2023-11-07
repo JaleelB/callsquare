@@ -63,12 +63,12 @@ git clone https://github.com/JaleelB/callsquare
 ### 2. Install dependencies
 
 ```bash
-yarn
+pnpm i
 ```
 
 ### 3. Create a `.env` file
 
-Create a `.env` file in the root directory and add the environment variables as shown in the `.env.example` file.
+Create a `.env.local` file in the root directory and add the environment variables as shown in the `.env.example` file.
 
 ## How do I deploy this?
 
