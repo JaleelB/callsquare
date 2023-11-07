@@ -17,10 +17,10 @@ Key features of the application include:
 
 - User Authentication: Ensuring secure access to the application and protecting user data.
 - API Routes: Facilitating communication between the client and server, enabling data exchange for various application features.
-- iddleware: Managing the sequence of functions that process requests and responses.
+- Middleware: Managing the sequence of functions that process requests and responses.
 - Server Components: Utilizing Next.js 13's server components to deliver an optimized user experience.
-T
-his project is an ongoing experiment, with plans for further exploration and expansion of its capabilities.
+  T
+  his project is an ongoing experiment, with plans for further exploration and expansion of its capabilities.
 
 ## Known Issues
 
@@ -45,9 +45,9 @@ A list of things not working right now:
 - [x] Invite email with **React Email** and **Resend**
 - [x] Scheduling calls
 - [ ] Screen Annotations
-- [ ] Deleting calls
+- [x] Deleting calls
 - [ ] Call recording
-- [ ] View call details
+- [x] View call details
 - [x] Rejoiing calls
 - [ ] Call transcription
 - [ ] Call limits
