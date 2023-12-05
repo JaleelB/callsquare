@@ -1,16 +1,18 @@
-import '../styles/globals.css'
-import RoomProvider from '~/components/room-provider';
-import CallIdProvider from '~/context/call-id-context';
-import { Toaster } from '~/components/ui/toaster';
-import { siteConfig } from '~/config/site-config';
-import { Analytics } from '@vercel/analytics/react';
+import "../styles/globals.css";
+import RoomProvider from "~/components/room-provider";
+import CallIdProvider from "~/context/call-id-context";
+import { Toaster } from "~/components/ui/toaster";
+import { siteConfig } from "~/config/site-config";
+import { Analytics } from "@vercel/analytics/react";
 import { Inter } from "next/font/google";
+import { ThemeProvider } from "~/components/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
   title: {
-    default: siteConfig.name
+    default: siteConfig.name,
+    template: "%s | " + siteConfig.name,
   },
   description: siteConfig.description,
   keywords: [
@@ -64,25 +66,30 @@ export const metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: `${siteConfig.url}/site.webmanifest`,
-}
-
+};
 
 export default function RootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
   return (
     <html lang="en">
       <body className={inter.className}>
-        <RoomProvider>
-          <CallIdProvider>
-            {children}
-            <Analytics />
-            <Toaster/>
-          </CallIdProvider>
-        </RoomProvider>
+        <ThemeProvider
+          attribute="class"
+          defaultTheme="system"
+          enableSystem
+          disableTransitionOnChange
+        >
+          <RoomProvider>
+            <CallIdProvider>
+              {children}
+              <Analytics />
+              <Toaster />
+            </CallIdProvider>
+          </RoomProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
