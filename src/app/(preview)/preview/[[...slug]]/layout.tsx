@@ -3,19 +3,17 @@ import FullNav from "~/components/layout/full-nav";
 import { Button } from "~/components/ui/button";
 
 export default function CallPreviewLayout({
-    children,
+  children,
 }: {
-    children: React.ReactNode;
+  children: React.ReactNode;
 }) {
-
   return (
     <div>
       <div className="fixed z-40">
-        {/* @ts-expect-error Server Component */}
         <FullNav>
-          <Link  href={"/login"}>
-            <Button 
-              className="rounded-md text-xs md:text-sm px-5 font-normal"
+          <Link href={"/login"}>
+            <Button
+              className="rounded-md px-5 text-xs font-normal md:text-sm"
               size="sm"
               variant="secondary"
             >
@@ -24,7 +22,7 @@ export default function CallPreviewLayout({
           </Link>
         </FullNav>
       </div>
-      <main className="flex items-center w-screen min-h-screen">
+      <main className="flex min-h-screen w-screen items-center">
         {children}
       </main>
     </div>
