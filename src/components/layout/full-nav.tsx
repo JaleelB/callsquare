@@ -14,9 +14,9 @@ export default async function FullNav({
     <header className="w-screen">
       <div className="container mx-auto flex h-20 max-w-[1400px] items-center justify-between py-6">
         <Link href={`${user ? "/calls" : "/"}`}>
-          <Icons.logo width="150" height="30" />
+          <Icons.logo width="150" height="30" className="text-primary" />
         </Link>
-        <nav className="font-normal text-neutral-700">{children}</nav>
+        <nav className="font-normal text-primary">{children}</nav>
       </div>
     </header>
   );
