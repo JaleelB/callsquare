@@ -2,7 +2,7 @@ import { LucideTrash } from "lucide-react";
 import { type SVGProps } from "react";
 
 export const Icons = {
-  logo: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  logo: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 105 22"
@@ -19,7 +19,7 @@ export const Icons = {
       />
     </svg>
   ),
-  camera: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  camera: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 28 22"
@@ -32,7 +32,7 @@ export const Icons = {
       />
     </svg>
   ),
-  github: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  github: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       aria-hidden="true"
       focusable="false"
@@ -49,7 +49,7 @@ export const Icons = {
       ></path>
     </svg>
   ),
-  discord: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  discord: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 71 55"
@@ -69,7 +69,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  google: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  google: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg {..._props} viewBox="0 0 18 18">
       <g fill="currentColor">
         <path
@@ -96,31 +96,32 @@ export const Icons = {
       </g>
     </svg>
   ),
-  spinner: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  spinner: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 38 38"
       xmlns="http://www.w3.org/2000/svg"
       stroke="currentColor"
+      className="bg-transparent"
     >
-      <g fill="currentColor" fillRule="evenodd">
-        <g transform="translate(1 1)" strokeWidth="2">
-          <circle strokeOpacity=".5" cx="18" cy="18" r="18" />
-          <path d="M36 18c0-9.94-8.06-18-18-18">
-            <animateTransform
-              attributeName="transform"
-              type="rotate"
-              from="0 18 18"
-              to="360 18 18"
-              dur="1s"
-              repeatCount="indefinite"
-            />
-          </path>
-        </g>
+      {/* <g> */}
+      <g transform="translate(1 1)" strokeWidth="2">
+        <circle strokeOpacity=".5" cx="18" cy="18" r="18" />
+        <path d="M36 18c0-9.94-8.06-18-18-18">
+          <animateTransform
+            attributeName="transform"
+            type="rotate"
+            from="0 18 18"
+            to="360 18 18"
+            dur="1s"
+            repeatCount="indefinite"
+          />
+        </path>
       </g>
+      {/* </g> */}
     </svg>
   ),
-  close: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  close: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       xmlns="http://www.w3.org/2000/svg"
@@ -135,7 +136,7 @@ export const Icons = {
       <line x1="6" y1="6" x2="18" y2="18"></line>
     </svg>
   ),
-  avatar: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  avatar: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 20 20"
@@ -151,7 +152,7 @@ export const Icons = {
       />
     </svg>
   ),
-  arrow: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  arrow: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       xmlns="http://www.w3.org/2000/svg"
@@ -166,7 +167,7 @@ export const Icons = {
       <polyline points="5 12 12 5 19 12"></polyline>
     </svg>
   ),
-  video: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  video: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 25 14"
@@ -179,7 +180,7 @@ export const Icons = {
       />
     </svg>
   ),
-  add: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  add: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 18 18"
@@ -192,7 +193,7 @@ export const Icons = {
       />
     </svg>
   ),
-  invite: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  invite: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       viewBox="0 0 25 24"
@@ -217,7 +218,7 @@ export const Icons = {
       </defs>
     </svg>
   ),
-  chevronLeft: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  chevronLeft: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       xmlns="http://www.w3.org/2000/svg"
@@ -231,7 +232,7 @@ export const Icons = {
       <path d="M15 18l-6-6 6-6" />
     </svg>
   ),
-  chevronRight: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  chevronRight: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       xmlns="http://www.w3.org/2000/svg"
@@ -245,7 +246,7 @@ export const Icons = {
       <path d="M9 18l6-6-6-6" />
     </svg>
   ),
-  settings: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  settings: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       xmlns="http://www.w3.org/2000/svg"
@@ -258,7 +259,7 @@ export const Icons = {
       />
     </svg>
   ),
-  logout: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  logout: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       xmlns="http://www.w3.org/2000/svg"
@@ -281,7 +282,7 @@ export const Icons = {
       />
     </svg>
   ),
-  join: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  join: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg
       {..._props}
       xmlns="http://www.w3.org/2000/svg"
@@ -304,7 +305,7 @@ export const Icons = {
       />
     </svg>
   ),
-  ellipsis: ({ color, ..._props }: SVGProps<SVGSVGElement>) => (
+  ellipsis: ({ ..._props }: SVGProps<SVGSVGElement>) => (
     <svg {..._props} viewBox="0 0 24 24" fill="currentColor">
       <circle cx="5" cy="12" r="1.5" fill="currentColor" />
       <circle cx="12" cy="12" r="1.5" fill="currentColor" />

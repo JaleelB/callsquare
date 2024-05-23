@@ -4,7 +4,6 @@ import UserAccountDropdown from "~/components/layout/user-account-dropdown";
 import { getCurrentUser } from "~/lib/session";
 import { notFound } from "next/navigation";
 import CallIdProvider from "~/context/call-id-context";
-import { ModeToggle } from "~/components/mode-toggle";
 
 export default async function CallsHomeLayout({
   children,
@@ -27,7 +26,6 @@ export default async function CallsHomeLayout({
             image: user?.image || "",
           }}
         />
-        <ModeToggle />
       </FullNav>
       <main className="my-16 flex w-screen flex-1 items-center md:my-8">
         <CallIdProvider>{children}</CallIdProvider>

@@ -63,7 +63,7 @@ export default function SiteFooter() {
             <Link
               key={item.name}
               href={item.href}
-              className="flex items-center text-neutral-500 hover:text-neutral-600"
+              className="flex items-center text-muted-foreground hover:text-neutral-600"
             >
               <span className="sr-only">{item.name}</span>
               <item.icon className="h-6 w-6" aria-hidden="true" />

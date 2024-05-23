@@ -1,15 +1,19 @@
 export default function CallHistoryLoading() {
-    return (
-        <div className="container max-w-[1400px] mb-12 mx-auto">
-            <h1 className="text-2xl md:text-[30px] font-semibold leading-tight mb-1">Call history</h1>
-            <p className="text-muted-foreground mb-8">Review your past interactions and revisit meaningful moments</p>
-            
-            <div className="rounded-md border p-4">
-                <div className="h-4 bg-slate-100 animate-pulse w-1/3 mb-6"></div>
-                <div className="h-4 bg-slate-100 animate-pulse w-full my-2"></div>
-                <div className="h-4 bg-slate-100 animate-pulse w-full my-2"></div>
-                <div className="h-10 bg-slate-100 animate-pulse w-1/4 mt-12"></div>
-            </div>
-        </div>
-    )
+  return (
+    <div className="container mx-auto mb-12 max-w-[1400px]">
+      <h1 className="mb-1 text-2xl font-semibold leading-tight md:text-[30px]">
+        Call history
+      </h1>
+      <p className="mb-8 text-muted-foreground">
+        Review your past interactions and revisit meaningful moments
+      </p>
+
+      <div className="rounded-md border p-4">
+        <div className="mb-6 h-4 w-1/3 animate-pulse bg-primary"></div>
+        <div className="my-2 h-4 w-full animate-pulse bg-primary"></div>
+        <div className="my-2 h-4 w-full animate-pulse bg-primary"></div>
+        <div className="mt-12 h-10 w-1/4 animate-pulse bg-primary"></div>
+      </div>
+    </div>
+  );
 }
