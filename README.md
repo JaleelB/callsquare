@@ -42,15 +42,17 @@ A list of things not working right now:
 
 ## Features to be implemented
 
-- [x] Invite email with **React Email** and **Resend**
+- [ ] Invite email with **React Email** and **Resend**
 - [x] Scheduling calls
 - [ ] Screen Annotations
-- [x] Deleting calls
+- [x] Deleting calls records
+- [ ] In call chat
 - [ ] Call recording
 - [x] View call details
 - [x] Rejoiing calls
 - [ ] Call transcription
 - [ ] Call limits
+- [ ] Screen sharing
 
 ## Installation
 
